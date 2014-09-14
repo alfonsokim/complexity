@@ -3,6 +3,9 @@
  */
 package cyc.montecarlo.funcion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Alfonso Kim
  *
@@ -13,13 +16,16 @@ public class Elemento implements Comparable<Elemento> {
 	private double x;
 	private double fx;
 	private double px;
+	private double pxObservado;
 	private double pdf;
-	private long numObservaciones;
+	private List<Double> observaciones;
 
 	/**
 	 * 
 	 */
-	public Elemento() { }
+	public Elemento() { 
+		observaciones = new ArrayList<Double>();
+	}
 
 	/**
 	 * @return the x
@@ -64,6 +70,20 @@ public class Elemento implements Comparable<Elemento> {
 	}
 
 	/**
+	 * @return the pxObservado to set
+	 */
+	public void setPxObservado(double pxObservado) {
+		this.pxObservado = pxObservado;
+	}
+	
+	/**
+	 * @return the pxObservado
+	 */
+	public double getPxObservado() {
+		return pxObservado;
+	}
+
+	/**
 	 * @return the pdf
 	 */
 	public double getPdf() {
@@ -99,8 +119,18 @@ public class Elemento implements Comparable<Elemento> {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Elemento [i=").append(i).append(", x=").append(x)
 				.append(", fx=").append(fx).append(", px=").append(px)
-				.append(", pdf=").append(pdf).append("]\n");
+				.append(", pdf=").append(pdf)
+				.append(", pxObservado=").append(pxObservado)
+				.append(", numObservaciones=").append(getNumObservaciones()).append("]\n");
 		return builder.toString();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String todasObservacionesStr(){
+		return observaciones.toString();
 	}
 
 	@Override
@@ -112,14 +142,14 @@ public class Elemento implements Comparable<Elemento> {
 	 * @return the numObservaciones
 	 */
 	public long getNumObservaciones() {
-		return numObservaciones;
+		return observaciones.size();
 	}
 
 	/**
-	 * @param numObservaciones the numObservaciones to set
+	 * 
 	 */
-	public void setNumObservaciones(long numObservaciones) {
-		this.numObservaciones = numObservaciones;
+	public void nuevaObservacion(double observacion) {
+		this.observaciones.add(observacion);
 	}
 
 }

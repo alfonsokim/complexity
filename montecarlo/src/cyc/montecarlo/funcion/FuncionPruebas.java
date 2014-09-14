@@ -21,5 +21,11 @@ public class FuncionPruebas extends FuncionBase {
 		validar(x);
 		return 1 - (2*x*x) + (3*x*x*x); 
 	}
+	
+	@Override
+	public void observacion(double probX){
+		agregarObservacion(probX);
+	}
+
 
 }

@@ -16,5 +16,16 @@ public interface Funcion {
 	 */
 	public double fX(double x);
 	
+	/**
+	 * 
+	 * @param probX
+	 */
+	public void observacion(double probX);
+	
+	/**
+	 * 
+	 * @param numObservaciones
+	 */
+	public void setValoresObservados(long numObservaciones);
 
 }
