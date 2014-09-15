@@ -94,12 +94,40 @@ public abstract class FuncionBase implements Funcion {
 		
 	}
 	
+	/**
+	 * 
+	 */
 	public void setValoresObservados(long numObservaciones){
 		for(Elemento elemento: elementos){
-			double pxObservado = (new Double(elemento.getNumObservaciones()) / 
+			double pxObservado = (
+					new Double(elemento.getNumObservaciones()) / 
 					new Double(numObservaciones));
 			elemento.setPxObservado(pxObservado);
 		}
+	}
+	
+	/**
+	 * 
+	 */
+	public double getMedia(){
+		double media = 0;
+		for(Elemento elemento: elementos){
+			media += elemento.getDeltaPx();
+		}
+		return media;
+	}
+	
+	/**
+	 * 
+	 */
+	public double getDesviacionStd(){
+		double acumulado = 0;
+		double media = getMedia();
+		for(Elemento elemento : elementos){
+			double a = media - elemento.getDeltaPx();
+			acumulado += (a * a);
+		}
+		return Math.sqrt(acumulado / elementos.size());
 	}
 	
 	

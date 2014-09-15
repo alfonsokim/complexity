@@ -25,6 +25,7 @@ public class Experimento {
 		this.random = new Random();
 	}
 	
+	
 	/**
 	 * 
 	 * @param numObservaciones
@@ -35,6 +36,22 @@ public class Experimento {
 		}
 		funcion.setValoresObservados(numObservaciones);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double getMedia(){
+		return funcion.getMedia();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double getDesviacionStd(){
+		return funcion.getDesviacionStd();
+	}
 
 	/**
 	 * @see java.lang.Object#toString()
@@ -42,7 +59,10 @@ public class Experimento {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Experimento [funcion=").append(funcion).append("]");
+		builder.append("Experimento [funcion=").append(funcion)
+		.append(", media=").append(getMedia())
+		.append(", desviacionStd=").append(getDesviacionStd())
+		.append("]");
 		return builder.toString();
 	}
 	

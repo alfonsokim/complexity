@@ -82,6 +82,14 @@ public class Elemento implements Comparable<Elemento> {
 	public double getPxObservado() {
 		return pxObservado;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double getDeltaPx(){
+		return Math.abs(pxObservado - px);
+	}
 
 	/**
 	 * @return the pdf
@@ -121,7 +129,9 @@ public class Elemento implements Comparable<Elemento> {
 				.append(", fx=").append(fx).append(", px=").append(px)
 				.append(", pdf=").append(pdf)
 				.append(", pxObservado=").append(pxObservado)
-				.append(", numObservaciones=").append(getNumObservaciones()).append("]\n");
+				.append(", numObservaciones=").append(getNumObservaciones())
+				.append(", deltaPx=").append(getDeltaPx())
+				.append("]\n");
 		return builder.toString();
 	}
 	

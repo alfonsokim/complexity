@@ -27,5 +27,17 @@ public interface Funcion {
 	 * @param numObservaciones
 	 */
 	public void setValoresObservados(long numObservaciones);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double getMedia();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double getDesviacionStd();
 
 }
