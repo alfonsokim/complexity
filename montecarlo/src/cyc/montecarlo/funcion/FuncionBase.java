@@ -16,6 +16,7 @@ public abstract class FuncionBase implements Funcion {
 	protected long cuantiles;
 	private List<Elemento> elementos;
 	private double delta;
+	private long numObservaciones;
 	
 	
 	protected FuncionBase(double minimo, double maximo) {
@@ -98,6 +99,7 @@ public abstract class FuncionBase implements Funcion {
 	 * 
 	 */
 	public void setValoresObservados(long numObservaciones){
+		this.numObservaciones = numObservaciones;
 		for(Elemento elemento: elementos){
 			double pxObservado = (
 					new Double(elemento.getNumObservaciones()) / 
@@ -128,6 +130,24 @@ public abstract class FuncionBase implements Funcion {
 			acumulado += (a * a);
 		}
 		return Math.sqrt(acumulado / elementos.size());
+	}
+	
+	/**
+	 * 
+	 */
+	public List<Double> calculaLimitesCuantiles(int numCuantiles){
+		//TODO: Validar que numCuantiles sea impar
+		List<Double> limites = new ArrayList<Double>();
+		long observacionesEsperadas = new Double(Math.ceil(numObservaciones / numCuantiles)).longValue();
+		long obsAcumuladas = 0;
+		for(Elemento elemento : elementos){
+			if(obsAcumuladas + elemento.getNumObservaciones() >= observacionesEsperadas){
+				limites.add(elemento.getX());
+				obsAcumuladas = 0;
+			}
+			obsAcumuladas =+ elemento.getNumObservaciones();
+		}
+		return limites;
 	}
 	
 	

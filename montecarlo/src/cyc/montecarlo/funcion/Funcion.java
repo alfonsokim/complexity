@@ -3,6 +3,8 @@
  */
 package cyc.montecarlo.funcion;
 
+import java.util.List;
+
 /**
  * @author Alfonso Kim
  *
@@ -39,5 +41,12 @@ public interface Funcion {
 	 * @return
 	 */
 	public double getDesviacionStd();
+	
+	/**
+	 * 
+	 * @param numCuantiles
+	 * @return
+	 */
+	public List<Double> calculaLimitesCuantiles(int numCuantiles);
 
 }
