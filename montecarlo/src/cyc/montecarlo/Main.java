@@ -29,6 +29,8 @@ public class Main {
 		for(Elemento limite: gausiana.getCuantiles()){
 			System.out.println(limite);
 		}
+		gausiana.muestrear(1, 1000);
+		System.out.println("Gausiana muestreada: " + gausiana);
 	}
 
 }

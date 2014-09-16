@@ -139,6 +139,14 @@ public abstract class Elemento implements Comparable<Elemento> {
 	 * 
 	 * @return
 	 */
+	public String elementoToString(){
+		return toString();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String todasObservacionesStr(){
 		return observaciones.toString();
 	}
@@ -161,5 +169,6 @@ public abstract class Elemento implements Comparable<Elemento> {
 	public void nuevaObservacion(double observacion) {
 		this.observaciones.add(observacion);
 	}
+	
 
 }

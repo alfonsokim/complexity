@@ -139,8 +139,10 @@ public abstract class FuncionBase implements Funcion {
 		long obsAcumuladas = 0;
 		for(Elemento elemento : elementos){
 			obsAcumuladas += elemento.getNumObservaciones();
+			Cuantil cuantil = (Cuantil)elemento;
 			if(obsAcumuladas + elemento.getNumObservaciones() >= observacionesEsperadas){
-				gausiana.addCuantil((Cuantil)elemento);
+				cuantil.addObservacionAcumuladaCuantil(obsAcumuladas);
+				gausiana.addCuantil(cuantil);
 				obsAcumuladas = 0;
 			}
 		}
@@ -167,7 +169,7 @@ public abstract class FuncionBase implements Funcion {
 		StringBuilder builder = new StringBuilder();
 		builder.append("FuncionBase [elementos=");
 		for(Elemento elemento : elementos){
-			builder.append(elemento).append("\n");
+			builder.append(elemento.elementoToString()).append("\n");
 		}
 		builder.append("]");
 		return builder.toString();
