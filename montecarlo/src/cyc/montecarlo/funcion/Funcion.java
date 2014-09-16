@@ -3,7 +3,7 @@
  */
 package cyc.montecarlo.funcion;
 
-import java.util.List;
+import cyc.montecarlo.Gausiana;
 
 /**
  * @author Alfonso Kim
@@ -47,6 +47,6 @@ public interface Funcion {
 	 * @param numCuantiles
 	 * @return
 	 */
-	public List<Cuantil> calculaLimitesCuantiles(int numCuantiles);
+	public Gausiana calculaGausiana(int numCuantiles);
 
 }

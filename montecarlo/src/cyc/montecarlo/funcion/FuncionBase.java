@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import cyc.montecarlo.Gausiana;
+
 /**
  * 
  * @author Alfonso Kim
@@ -130,19 +132,19 @@ public abstract class FuncionBase implements Funcion {
 	/**
 	 * 
 	 */
-	public List<Cuantil> calculaLimitesCuantiles(int numCuantiles){
+	public Gausiana calculaGausiana(int numCuantiles){
 		//TODO: Validar que numCuantiles sea impar
-		List<Cuantil> limites = new ArrayList<Cuantil>();
+		Gausiana gausiana = new Gausiana();
 		long observacionesEsperadas = new Double(Math.ceil(numObservaciones / numCuantiles)).longValue();
 		long obsAcumuladas = 0;
 		for(Elemento elemento : elementos){
 			obsAcumuladas += elemento.getNumObservaciones();
 			if(obsAcumuladas + elemento.getNumObservaciones() >= observacionesEsperadas){
-				limites.add((Cuantil)elemento);
+				gausiana.addCuantil((Cuantil)elemento);
 				obsAcumuladas = 0;
 			}
 		}
-		return limites;
+		return gausiana;
 	}
 	
 	
