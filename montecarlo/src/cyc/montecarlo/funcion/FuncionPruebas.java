@@ -13,7 +13,14 @@ public class FuncionPruebas extends FuncionBase {
 	 * 
 	 */
 	public FuncionPruebas(double minimo, double maximo) {
-		super(minimo, maximo);
+		this(minimo, maximo, 10);
+	}
+	
+	/**
+	 * 
+	 */
+	public FuncionPruebas(double minimo, double maximo, long cuantiles) {
+		super(minimo, maximo, cuantiles);
 	}
 
 	@Override

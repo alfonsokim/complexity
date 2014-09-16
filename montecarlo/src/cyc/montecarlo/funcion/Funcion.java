@@ -47,6 +47,6 @@ public interface Funcion {
 	 * @param numCuantiles
 	 * @return
 	 */
-	public List<Double> calculaLimitesCuantiles(int numCuantiles);
+	public List<Cuantil> calculaLimitesCuantiles(int numCuantiles);
 
 }

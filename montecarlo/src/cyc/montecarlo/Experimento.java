@@ -3,8 +3,10 @@
  */
 package cyc.montecarlo;
 
+import java.util.List;
 import java.util.Random;
 
+import cyc.montecarlo.funcion.Cuantil;
 import cyc.montecarlo.funcion.Funcion;
 
 /**
@@ -35,6 +37,10 @@ public class Experimento {
 			funcion.observacion(random.nextDouble());
 		}
 		funcion.setValoresObservados(numObservaciones);
+	}
+	
+	public List<Cuantil> calculaLimitesCuantiles(int numCuantiles){
+		return funcion.calculaLimitesCuantiles(numCuantiles);
 	}
 	
 	/**

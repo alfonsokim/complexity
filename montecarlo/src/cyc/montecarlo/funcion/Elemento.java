@@ -10,7 +10,7 @@ import java.util.List;
  * @author Alfonso Kim
  *
  */
-public class Elemento implements Comparable<Elemento> {
+public abstract class Elemento implements Comparable<Elemento> {
 	
 	private double i;
 	private double x;
@@ -131,7 +131,7 @@ public class Elemento implements Comparable<Elemento> {
 				.append(", pxObservado=").append(pxObservado)
 				.append(", numObservaciones=").append(getNumObservaciones())
 				.append(", deltaPx=").append(getDeltaPx())
-				.append("]\n");
+				.append("]");
 		return builder.toString();
 	}
 	

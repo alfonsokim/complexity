@@ -19,11 +19,6 @@ public abstract class FuncionBase implements Funcion {
 	private long numObservaciones;
 	
 	
-	protected FuncionBase(double minimo, double maximo) {
-		this(minimo, maximo, 10);
-	}
-	
-	
 	/**
 	 * 
 	 * @param minimo
@@ -41,7 +36,7 @@ public abstract class FuncionBase implements Funcion {
 		double sumFx = 0;
 		for(int i = 0; i < cuantiles; i++){
 			double fx = fX(x);
-			Elemento elemento = new Elemento();
+			Elemento elemento = new Cuantil();
 			elemento.setI(i);
 			elemento.setX(x);
 			sumFx += fx;
@@ -135,17 +130,17 @@ public abstract class FuncionBase implements Funcion {
 	/**
 	 * 
 	 */
-	public List<Double> calculaLimitesCuantiles(int numCuantiles){
+	public List<Cuantil> calculaLimitesCuantiles(int numCuantiles){
 		//TODO: Validar que numCuantiles sea impar
-		List<Double> limites = new ArrayList<Double>();
+		List<Cuantil> limites = new ArrayList<Cuantil>();
 		long observacionesEsperadas = new Double(Math.ceil(numObservaciones / numCuantiles)).longValue();
 		long obsAcumuladas = 0;
 		for(Elemento elemento : elementos){
+			obsAcumuladas += elemento.getNumObservaciones();
 			if(obsAcumuladas + elemento.getNumObservaciones() >= observacionesEsperadas){
-				limites.add(elemento.getX());
+				limites.add((Cuantil)elemento);
 				obsAcumuladas = 0;
 			}
-			obsAcumuladas =+ elemento.getNumObservaciones();
 		}
 		return limites;
 	}
@@ -168,7 +163,11 @@ public abstract class FuncionBase implements Funcion {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("FuncionBase [elementos=").append(elementos).append("]");
+		builder.append("FuncionBase [elementos=");
+		for(Elemento elemento : elementos){
+			builder.append(elemento).append("\n");
+		}
+		builder.append("]");
 		return builder.toString();
 	}
 
