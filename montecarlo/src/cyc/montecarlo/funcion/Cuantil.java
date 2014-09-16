@@ -19,6 +19,17 @@ public class Cuantil extends Elemento {
 		numObservacionesCuantil = 0;
 		numObservacionesAcumuladasCuantil = 0;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Cuantil clone(){
+		Cuantil c = new Cuantil();
+		c.numObservacionesCuantil = numObservacionesCuantil;
+		c.numObservacionesAcumuladasCuantil = numObservacionesAcumuladasCuantil;
+		return c;
+	}
 
 	/**
 	 * @return the numObservacionesCuantil
@@ -34,12 +45,28 @@ public class Cuantil extends Elemento {
 		this.numObservacionesCuantil += 1;
 	}
 	
+	/**
+	 * 
+	 * @param numObs
+	 */
 	public void addObservacionAcumuladaCuantil(long numObs){
 		numObservacionesAcumuladasCuantil += numObs;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public long getNumObservacionesAcumuladas(){
 		return numObservacionesAcumuladasCuantil;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public long getDeltaObservaciones(){
+		return Math.abs(numObservacionesAcumuladasCuantil - numObservacionesCuantil);
 	}
 	
 	@Override
@@ -48,6 +75,7 @@ public class Cuantil extends Elemento {
 		builder.append("Cuantil [");
 		builder.append("numObsAcumuladasCuantil=").append(numObservacionesAcumuladasCuantil);
 		builder.append(", numObservacionesCuantil=").append(numObservacionesCuantil);
+		builder.append(", detaObservaciones=").append(getDeltaObservaciones());
 		builder.append("]");
 		return builder.toString();
 	}

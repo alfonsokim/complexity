@@ -30,6 +30,17 @@ public class Gausiana {
 	
 	/**
 	 * 
+	 */
+	public Gausiana clone(){
+		Gausiana g = new Gausiana();
+		for(Cuantil cuantil: cuantiles){
+			g.addCuantil(cuantil.clone());
+		}
+		return g;
+	}
+	
+	/**
+	 * 
 	 * @param cuantil
 	 */
 	public void addCuantil(Cuantil cuantil){
@@ -42,9 +53,18 @@ public class Gausiana {
 	 * @param tamMuestra
 	 */
 	public void muestrear(int numMuestras, long tamMuestra){
-		for(int i = 0; i < tamMuestra; i++){
-			agregarObservacion(random.nextDouble());
+		double promedioMedias = 0;
+		double promedioDesviaciones = 0;
+		for(int muestra = 0; muestra < numMuestras; muestra++){
+			Gausiana g = clone();
+			for(int i = 0; i < tamMuestra; i++){
+				g.agregarObservacion(random.nextDouble());
+			}
+			promedioMedias = g.getMedia() / tamMuestra;
+			promedioDesviaciones = g.getDesviacionStd() / tamMuestra;
 		}
+		System.out.println("medias: " + (promedioMedias / numMuestras));
+		System.out.println("stddev: " + (promedioDesviaciones / numMuestras));
 	}
 	
 	/**
@@ -72,6 +92,30 @@ public class Gausiana {
 		}
 		observado.nuevaObservacionCuantil(probX);
 		
+	}
+	
+	/**
+	 * 
+	 */
+	public double getMedia(){
+		double media = 0;
+		for(Cuantil cuantil: cuantiles){
+			media += cuantil.getDeltaObservaciones();
+		}
+		return (media / cuantiles.size());
+	}
+	
+	/**
+	 * 
+	 */
+	public double getDesviacionStd(){
+		double acumulado = 0;
+		double media = getMedia();
+		for(Cuantil cuantil : cuantiles){
+			double a = media - cuantil.getDeltaObservaciones();
+			acumulado += (a * a);
+		}
+		return Math.sqrt(acumulado / cuantiles.size());
 	}
 
 	/**

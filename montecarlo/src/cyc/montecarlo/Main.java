@@ -3,7 +3,6 @@
  */
 package cyc.montecarlo;
 
-import cyc.montecarlo.funcion.Elemento;
 import cyc.montecarlo.funcion.FuncionPruebas;
 
 /**
@@ -26,11 +25,7 @@ public class Main {
 		System.out.println(experimento);
 		Gausiana gausiana = experimento.calculaGausiana(10);
 		System.out.println("Cuantiles:");
-		for(Elemento limite: gausiana.getCuantiles()){
-			System.out.println(limite);
-		}
-		gausiana.muestrear(1, 1000);
-		System.out.println("Gausiana muestreada: " + gausiana);
+		gausiana.muestrear(100, 1000);
 	}
 
 }
