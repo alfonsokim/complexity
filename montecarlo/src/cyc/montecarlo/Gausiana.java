@@ -3,6 +3,8 @@
  */
 package cyc.montecarlo;
 
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -52,19 +54,15 @@ public class Gausiana {
 	 * @param numMuestras
 	 * @param tamMuestra
 	 */
-	public void muestrear(int numMuestras, long tamMuestra){
-		double promedioMedias = 0;
-		double promedioDesviaciones = 0;
-		for(int muestra = 0; muestra < numMuestras; muestra++){
-			Gausiana g = clone();
-			for(int i = 0; i < tamMuestra; i++){
-				g.agregarObservacion(random.nextDouble());
-			}
-			promedioMedias = g.getMedia() / tamMuestra;
-			promedioDesviaciones = g.getDesviacionStd() / tamMuestra;
+	public ResultadoMuestra muestrear(long tamMuestra){
+		Gausiana g = clone();
+		for(int i = 0; i < tamMuestra; i++){
+			g.agregarObservacion(random.nextDouble());
 		}
-		System.out.println("medias: " + (promedioMedias / numMuestras));
-		System.out.println("stddev: " + (promedioDesviaciones / numMuestras));
+		ResultadoMuestra rm = new ResultadoMuestra();
+		rm.setMedia(g.getMedia() / tamMuestra);
+		rm.setDesviacionStd(g.getDesviacionStd() / tamMuestra);
+		return rm;
 	}
 	
 	/**
@@ -137,6 +135,23 @@ public class Gausiana {
 		}
 		builder.append("]");
 		return builder.toString();
+	}
+	
+	public void toCsv(OutputStream streamSalida){
+		PrintWriter salida = new PrintWriter(streamSalida);
+		salida.println("i,px,pdf,numObservaciones,numObservacionesAcumuladas");
+		//Lo siguiente es una aberracion de lo mal estructurado del codigo
+		for(Cuantil cuantil: cuantiles){
+			salida.println(new StringBuilder()
+				.append(cuantil.getI()).append(",")
+				.append(cuantil.getPx()).append(",")
+				.append(cuantil.getPdf()).append(",")
+				.append(cuantil.getNumObservacionesAcumuladas()).append(",")
+				.append(cuantil.getNumObservacionesCuantil())
+				.toString()
+			);
+		}
+		salida.close();
 	}
 
 }

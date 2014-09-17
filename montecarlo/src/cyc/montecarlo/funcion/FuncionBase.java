@@ -174,6 +174,10 @@ public abstract class FuncionBase implements Funcion {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	public List<Elemento> getElementos(){
+		return elementos;
+	}
 
 
 }
