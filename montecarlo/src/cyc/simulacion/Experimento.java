@@ -4,7 +4,12 @@
 package cyc.simulacion;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import cyc.simulacion.funcion.Funcion;
 
@@ -19,6 +24,7 @@ public class Experimento {
 	private double maximo;
 	private int segmentos;
 	private List<Cuantil> cuantiles;
+	private Random random;
 	
 	/**
 	 * 
@@ -34,6 +40,7 @@ public class Experimento {
 		this.maximo = maximo;
 		this.segmentos = segmentos;
 		this.cuantiles = new ArrayList<Cuantil>();
+		this.random = new Random();
 		
 		double delta = (maximo - minimo) / segmentos;
 		
@@ -76,6 +83,54 @@ public class Experimento {
 	public Experimento(Funcion funcion, double minimo, double maximo){
 		this(funcion, minimo, maximo, 100);
 	}
+	
+	/**
+	 * 
+	 * @param probX
+	 */
+	protected Muestra generarMuestra(long numObservaciones){
+		
+		// Se podria resolver con un Set si tuviera el metodo get
+		Map<Cuantil, Cuantil> cuantilesMuestreados = new HashMap<Cuantil, Cuantil>();
+		
+		Collections.sort(cuantiles, new Comparator<Cuantil>(){
+			@Override
+			public int compare(Cuantil a, Cuantil b) {
+				return new Double(a.getPdf()).compareTo(new Double(b.getPdf()));
+			}
+		});
+		
+		for(long observacion = 0; observacion < numObservaciones; observacion++){
+			
+			double probX = random.nextDouble();
+		
+			if(probX < 0 || probX > 1){
+				throw new RuntimeException("observacion fuera de rango [0, 1]");
+			}
+			
+			Cuantil observado = cuantiles.get(0);
+			for(Cuantil elemento: cuantiles){
+				if(elemento.getPdf() > probX){
+					break;	// Esto se puede hacer en un ciclo sin cuerpo
+				}
+				observado = elemento;
+			}
+			
+			double valorObservado = observado.getPx();
+			
+			if(cuantilesMuestreados.containsKey(observado)){
+				cuantilesMuestreados.get(observado).nuevaObservacion(valorObservado);
+			} else {
+				Cuantil cuantilMuestreado = observado.clone();
+				cuantilMuestreado.nuevaObservacion(valorObservado);
+				cuantilesMuestreados.put(cuantilMuestreado, cuantilMuestreado);
+			}
+		}
+		
+		return new Muestra(new ArrayList<Cuantil>(cuantilesMuestreados.values()));
+		
+	}
+	
 
 	/**
 	 * @return the funcion

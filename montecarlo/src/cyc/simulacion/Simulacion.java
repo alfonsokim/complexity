@@ -21,7 +21,9 @@ public class Simulacion {
 	 */
 	public void ejecutar(){
 		Experimento experimento = new Experimento(new FuncionPruebas(), 0, 100);
-		System.out.println(experimento.toString());
+		System.out.println(experimento);
+		Muestra muestra = experimento.generarMuestra(1000);
+		System.out.println(muestra);
 	}
 
 	/**

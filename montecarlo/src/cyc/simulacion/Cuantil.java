@@ -3,23 +3,58 @@
  */
 package cyc.simulacion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * @author Alfonso Kim
  *
  */
-public class Cuantil implements Comparable<Cuantil> {
+public class Cuantil implements Comparable<Cuantil>, Cloneable {
 	
 	private double i;
 	private double x;
 	private double fx;
 	private double px;
 	private double pdf;
+	private List<Double> observaciones;
 
 	/**
 	 * 
 	 */
 	public Cuantil() { 
+		observaciones = new ArrayList<Double>();
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public Cuantil clone(){
+		Cuantil clon = new Cuantil();
+		clon.i = this.i;
+		clon.x = this.x;
+		clon.fx = this.fx;
+		clon.px = this.px;
+		clon.pdf = this.pdf;
+		return clon;
+	}
+	
+	/**
+	 * 
+	 * @param probX
+	 */
+	public void nuevaObservacion(double probX){
+		observaciones.add(probX);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getNumObservaciones(){
+		return observaciones.size();
 	}
 
 	/**
@@ -117,6 +152,59 @@ public class Cuantil implements Comparable<Cuantil> {
 	@Override
 	public int compareTo(Cuantil o) {
 		return new Double(fx).compareTo(new Double(o.fx));
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(fx);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(i);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(pdf);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(px);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cuantil other = (Cuantil) obj;
+		if (Double.doubleToLongBits(fx) != Double.doubleToLongBits(other.fx))
+			return false;
+		if (Double.doubleToLongBits(i) != Double.doubleToLongBits(other.i))
+			return false;
+		if (Double.doubleToLongBits(pdf) != Double.doubleToLongBits(other.pdf))
+			return false;
+		if (Double.doubleToLongBits(px) != Double.doubleToLongBits(other.px))
+			return false;
+		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+			return false;
+		return true;
+	}
+
+	/**
+	 * @return the observaciones
+	 */
+	public List<Double> getObservaciones() {
+		return observaciones;
 	}
 	
 
