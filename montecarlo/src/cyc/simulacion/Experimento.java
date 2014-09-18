@@ -36,7 +36,6 @@ public class Experimento {
 	 * @param segmentos
 	 */
 	public Experimento(Funcion funcion, double minimo, double maximo, int segmentos) {
-		super();
 		this.funcion = funcion;
 		this.minimo = minimo;
 		this.maximo = maximo;
