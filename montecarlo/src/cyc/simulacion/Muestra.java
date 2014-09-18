@@ -34,7 +34,7 @@ public class Muestra {
 	 * @param numCuantiles
 	 * @return
 	 */
-	public List<Cuantil> calculaLimitesCuantiles(int numCuantiles){
+	public Distribucion comoDistribucion(int numCuantiles){
 		//TODO: Validar que numCuantiles sea inpar
 		
 		List<Cuantil> limites = new ArrayList<Cuantil>();
@@ -49,7 +49,7 @@ public class Muestra {
 				obsAcumuladas = 0;
 			}
 		}
-		return limites;
+		return new Distribucion(limites, todasObservaciones.size());
 	}
 	
 	/**

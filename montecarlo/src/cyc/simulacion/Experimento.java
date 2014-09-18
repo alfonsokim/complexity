@@ -193,18 +193,22 @@ public class Experimento {
 	 */
 	public void toCsv(OutputStream streamSalida){
 		PrintWriter salida = new PrintWriter(streamSalida);
+		salida.println(new StringBuilder("funcion").append(",").append(funcion));
+		salida.println(new StringBuilder("minimo").append(",").append(minimo));
+		salida.println(new StringBuilder("maximo").append(",").append(maximo));
+		salida.println(new StringBuilder("segmentos").append(",").append(segmentos));
 		salida.println("i,x,fx,px,pdf");
 		for(Cuantil cuantil: cuantiles){
 			salida.println(new StringBuilder()
-				.append(cuantil.getI())
-				.append(cuantil.getX())
-				.append(cuantil.getFx())
-				.append(cuantil.getPx())
+				.append(cuantil.getI()).append(",")
+				.append(cuantil.getX()).append(",")
+				.append(cuantil.getFx()).append(",")
+				.append(cuantil.getPx()).append(",")
 				.append(cuantil.getPdf())
 				.toString()
 			);
 		}
-		
+		salida.close();
 	}
 
 

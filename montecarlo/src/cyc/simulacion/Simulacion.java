@@ -4,8 +4,9 @@
 package cyc.simulacion;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 import cyc.simulacion.funcion.FuncionPruebas;
@@ -26,19 +27,19 @@ public class Simulacion {
 	 */
 	public void ejecutar(){
 		Experimento experimento = new Experimento(new FuncionPruebas(), 0, 100);
+		OutputStream salidaExperimento = null;
 		try {
-			experimento.toCsv(new FileOutputStream(new File("experimento.csv")));
+			salidaExperimento = new FileOutputStream(new File("experimento.csv"));
+			experimento.toCsv(salidaExperimento);
 			long tamMuestra = 1000;
 			Muestra muestra = experimento.generarMuestra(tamMuestra);
-			System.out.println(muestra);
-			List<Cuantil> limitesGausiana = muestra.calculaLimitesCuantiles(10);
-			System.out.println("Limites Gausiana:");
-			for(Cuantil limite: limitesGausiana){
-				double pxObsercado= (new Double(limite.getObservacionesAcumuladas()) / tamMuestra);
-				System.out.println(limite + ", pxObservado=" + pxObsercado);
-			}
-		} catch (FileNotFoundException e) {
+			Distribucion limitesGausiana = muestra.comoDistribucion(10);
+			System.out.println("Limites Gausiana:" + limitesGausiana);
+			salidaExperimento.close();
+		} catch (IOException e) {
 			System.err.println("Imposible escribir archivos de salida " + e.getMessage());
+		} finally {
+			
 		}
 
 	}
