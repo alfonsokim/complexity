@@ -4,14 +4,11 @@
 package cyc.simulacion.funcion;
 
 /**
- * @author Alfonso
+ * @author Alfonso Kim
  *
  */
 public class FuncionPruebas implements Funcion {
 
-	/**
-	 * 
-	 */
 	public FuncionPruebas() { }
 
 	/**

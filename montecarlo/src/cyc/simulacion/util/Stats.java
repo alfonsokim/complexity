@@ -22,17 +22,26 @@ public class Stats {
 	 * @param numeros
 	 * @return
 	 */
+	public static double suma(List<Double> numeros){
+		double acumulado = 0;
+		for(Double d: numeros){
+			acumulado += d;
+		}
+		return acumulado;
+	}
+	
+	/**
+	 * 
+	 * @param numeros
+	 * @return
+	 */
 	public static double media(List<Double> numeros){
 		
 		if(numeros.size() == 0){
 			return 0;
 		}
 		
-		double acumulado = 0;
-		for(Double d: numeros){
-			acumulado += d;
-		}
-		return acumulado / numeros.size();
+		return suma(numeros) / numeros.size();
 	}
 	
 	/**
