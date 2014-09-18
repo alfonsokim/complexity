@@ -5,7 +5,6 @@ package cyc.simulacion.util;
 
 import java.util.List;
 
-import cyc.montecarlo.funcion.Elemento;
 
 /**
  * @author Alfonso Kim

@@ -3,6 +3,7 @@ package cyc.simulacion;
 import java.util.ArrayList;
 import java.util.List;
 
+import cyc.simulacion.Cuantil;
 import cyc.simulacion.util.Stats;
 
 
@@ -13,7 +14,6 @@ import cyc.simulacion.util.Stats;
 public class Muestra {
 	
 	private List<Cuantil> cuantiles;
-	private long numObservaciones;
 	private List<Double> todasObservaciones;
 	
 	/**
@@ -22,14 +22,34 @@ public class Muestra {
 	public Muestra(List<Cuantil> cuantiles) {
 		this.cuantiles = cuantiles;
 		this.todasObservaciones = new ArrayList<Double>();
-		
-		long no = 0;
+
 		for(Cuantil c : cuantiles){
-			no += c.getNumObservaciones();
 			// Aqui se pueden calcular la media y desviacion
 			todasObservaciones.addAll(c.getObservaciones());
 		}
-		this.numObservaciones = no;
+	}
+	
+	/**
+	 * 
+	 * @param numCuantiles
+	 * @return
+	 */
+	public List<Cuantil> calculaLimitesCuantiles(int numCuantiles){
+		//TODO: Validar que numCuantiles sea inpar
+		
+		List<Cuantil> limites = new ArrayList<Cuantil>();
+		
+		long observacionesEsperadas = new Double(Math.ceil(getNumObservaciones() / numCuantiles)).longValue();
+		long obsAcumuladas = 0;
+		for(Cuantil cuantil : cuantiles){
+			obsAcumuladas += cuantil.getNumObservaciones();
+			if(obsAcumuladas + cuantil.getNumObservaciones() >= observacionesEsperadas){
+				cuantil.addObservacionesAcumuladas(obsAcumuladas);
+				limites.add(cuantil);
+				obsAcumuladas = 0;
+			}
+		}
+		return limites;
 	}
 	
 	/**
@@ -55,8 +75,8 @@ public class Muestra {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Muestra [media=").append(getMedia())
-				.append(", desviacionStd=").append(getDesviacionStd())
-		        .append(", cuantiles=");
+			   .append(", desviacionStd=").append(getDesviacionStd())
+		       .append(", cuantiles=");
 		for(Cuantil c: cuantiles){
 			builder.append("\n").append(c);
 		}
@@ -68,7 +88,7 @@ public class Muestra {
 	 * @return the numObservaciones
 	 */
 	public long getNumObservaciones() {
-		return numObservaciones;
+		return todasObservaciones.size();
 	}
 
 

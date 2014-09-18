@@ -3,6 +3,8 @@
  */
 package cyc.simulacion;
 
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -183,6 +185,26 @@ public class Experimento {
 		}
 		builder.append("]");
 		return builder.toString();
+	}
+	
+	/**
+	 * 
+	 * @param streamSalida
+	 */
+	public void toCsv(OutputStream streamSalida){
+		PrintWriter salida = new PrintWriter(streamSalida);
+		salida.println("i,x,fx,px,pdf");
+		for(Cuantil cuantil: cuantiles){
+			salida.println(new StringBuilder()
+				.append(cuantil.getI())
+				.append(cuantil.getX())
+				.append(cuantil.getFx())
+				.append(cuantil.getPx())
+				.append(cuantil.getPdf())
+				.toString()
+			);
+		}
+		
 	}
 
 

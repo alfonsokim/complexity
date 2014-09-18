@@ -18,6 +18,7 @@ public class Cuantil implements Comparable<Cuantil>, Cloneable {
 	private double fx;
 	private double px;
 	private double pdf;
+	private long observacionesAcumuladas;
 	private List<Double> observaciones;
 
 	/**
@@ -126,6 +127,23 @@ public class Cuantil implements Comparable<Cuantil>, Cloneable {
 	public void setI(double i) {
 		this.i = i;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public long getObservacionesAcumuladas(){
+		return observacionesAcumuladas;
+	}
+	
+	/**
+	 * 
+	 * @param observaciones
+	 */
+	public void addObservacionesAcumuladas(long observaciones){
+		//TODO: Tal vez validar que observaciones > 0
+		observacionesAcumuladas += observaciones;
+	}
 
 	/**
 	 * @see java.lang.Object#toString()
@@ -154,7 +172,7 @@ public class Cuantil implements Comparable<Cuantil>, Cloneable {
 		return new Double(fx).compareTo(new Double(o.fx));
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -175,7 +193,7 @@ public class Cuantil implements Comparable<Cuantil>, Cloneable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
