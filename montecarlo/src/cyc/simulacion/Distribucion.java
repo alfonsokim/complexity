@@ -11,8 +11,9 @@ import java.util.List;
 import cyc.simulacion.util.Stats;
 
 /**
+ * Representa una distribucion
+ * 
  * @author Alfonso Kim
- *
  */
 public class Distribucion {
 	
@@ -20,7 +21,11 @@ public class Distribucion {
 	private long tamMuestra;
 
 	/**
+	 * Guarda una lista de cuantiles dentro de la distribucion
+	 * y el tamanio de la muesta
 	 * 
+	 * @param cuantiles Los cuantiles en la distribucion
+	 * @param tamMuesta El tamanio de la muestra de la distribucion
 	 */
 	public Distribucion(List<Cuantil> cuantiles, long tamMuestra) {
 		this.cuantiles = cuantiles;
@@ -28,8 +33,7 @@ public class Distribucion {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return La media aritmetica de la distribucion
 	 */
 	public double getMedia(){
 		List<Double> numeros = new ArrayList<Double>();
@@ -40,8 +44,7 @@ public class Distribucion {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return La desviacion estandar de la distribucion
 	 */
 	public double getDesviacionStd(){
 		List<Double> numeros = new ArrayList<Double>();
@@ -52,8 +55,10 @@ public class Distribucion {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * 		   Los datos teoricos son los que se generaron durante
+	 *         el experimento, y los oservados son cuando se genero
+	 *         la muestra.
+	 * @return La chi cuadrada de la distribucion 
 	 */
 	public double chiCuadrada(){
 		List<Double> sumatoria = new ArrayList<Double>();
@@ -67,7 +72,7 @@ public class Distribucion {
 	}
 	
 	/**
-	 * 
+	 * String d ela distribucion
 	 */
 	@Override
 	public String toString(){
@@ -81,8 +86,9 @@ public class Distribucion {
 
 	
 	/**
+	 * Para escribir la distribucion a un CSV (texto separado por comas)
 	 * 
-	 * @param streamSalida
+	 * @param streamSalida La salida al archivo CSV
 	 */
 	public void toCsv(OutputStream streamSalida){
 		PrintWriter salida = new PrintWriter(streamSalida);

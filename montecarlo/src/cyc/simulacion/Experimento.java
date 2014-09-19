@@ -16,8 +16,9 @@ import java.util.Random;
 import cyc.simulacion.funcion.Funcion;
 
 /**
+ * Un experimento de simulacion
+ * 
  * @author Alfonso Kim
- *
  */
 public class Experimento {
 	
@@ -29,11 +30,12 @@ public class Experimento {
 	private Random random;
 	
 	/**
+	 * Constructor de Experimento
 	 * 
-	 * @param funcion
-	 * @param minimo
-	 * @param maximo
-	 * @param segmentos
+	 * @param funcion	La funcion que se va a muestrear
+	 * @param minimo	El valor minimo a evaluar
+	 * @param maximo	El valor maximo a evaluar
+	 * @param segmentos	El numero de segmentos (o cuantiles)
 	 */
 	public Experimento(Funcion funcion, double minimo, double maximo, int segmentos) {
 		this.funcion = funcion;
@@ -76,18 +78,20 @@ public class Experimento {
 	}
 	
 	/**
+	 * Constructor simple
 	 * 
-	 * @param funcion
-	 * @param minimo
-	 * @param maximo
+	 * @param funcion	La funcion que se va a muestrear
+	 * @param minimo	El valor minimo a evaluar
+	 * @param maximo	El valor maximo a evaluar
 	 */
 	public Experimento(Funcion funcion, double minimo, double maximo){
 		this(funcion, minimo, maximo, 100);
 	}
 	
 	/**
+	 * Genera una muestra con n observaciones
 	 * 
-	 * @param probX
+	 * @param numObservaciones El numero de observaciones a generar 
 	 */
 	protected Muestra generarMuestra(long numObservaciones){
 		
@@ -101,6 +105,7 @@ public class Experimento {
 			}
 		});
 		
+		// se obtienen las observaciones
 		for(long observacion = 0; observacion < numObservaciones; observacion++){
 			
 			double probX = random.nextDouble();
@@ -117,8 +122,11 @@ public class Experimento {
 				observado = elemento;
 			}
 			
+			// Como probX es un aleatorio uniforme se trabaja con 
+			// la probabilidad de haber visto un valor igual en la funcion
 			double valorObservado = observado.getPx();
 			
+			// Se busca el cuantil donde se va a registrar la observacion
 			if(cuantilesMuestreados.containsKey(observado)){
 				cuantilesMuestreados.get(observado).nuevaObservacion(valorObservado);
 			} else {
@@ -187,8 +195,9 @@ public class Experimento {
 	}
 	
 	/**
+	 * Convierte a CSV el experimento
 	 * 
-	 * @param streamSalida
+	 * @param streamSalida La salida al CSV del experimento
 	 */
 	public void toCsv(OutputStream streamSalida){
 		PrintWriter salida = new PrintWriter(streamSalida);

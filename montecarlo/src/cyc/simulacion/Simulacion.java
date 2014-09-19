@@ -11,18 +11,20 @@ import java.io.OutputStream;
 import cyc.simulacion.funcion.FuncionPruebas;
 
 /**
+ * Aqui esta el punto de entrada de la consola
+ * 
  * @author Alfonso Kim
- *
  */
 public class Simulacion {
 
 	/**
-	 * 
+	 * Vacio
 	 */
 	public Simulacion() { }
 	
 	/**
-	 * 
+	 * Ejecuta la simulacion, aqui irian los parametros
+	 * datos por el usuario
 	 */
 	public void ejecutar(){
 		Experimento experimento = new Experimento(new FuncionPruebas(), 0, 100);
@@ -46,7 +48,11 @@ public class Simulacion {
 	}
 
 	/**
-	 * @param args
+	 * Punto de entrada de la consola
+	 * 
+	 * @param args Los argumentos de la linea de comandos
+	 * 			   En un futuro aqui se parsean los parametros
+	 * 			   del usuario.
 	 */
 	public static void main(String[] args) {
 		new Simulacion().ejecutar();

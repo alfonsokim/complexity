@@ -8,8 +8,9 @@ import cyc.simulacion.util.Stats;
 
 
 /**
+ * Una muestra generada a partir de un experimento
+ * 
  * @author Alfonso Kim
- *
  */
 public class Muestra {
 	
@@ -17,22 +18,27 @@ public class Muestra {
 	private List<Double> todasObservaciones;
 	
 	/**
+	 * Constructor de muestra
 	 * 
+	 * @param cuantiles Los cuantiles muestreados
 	 */
 	public Muestra(List<Cuantil> cuantiles) {
 		this.cuantiles = cuantiles;
 		this.todasObservaciones = new ArrayList<Double>();
 
 		for(Cuantil c : cuantiles){
-			// Aqui se pueden calcular la media y desviacion
+			// Aqui se podrian calcular la media y desviacion
+			// y ahorrase muchas iteraciones adicionales
 			todasObservaciones.addAll(c.getObservaciones());
 		}
 	}
 	
 	/**
+	 * Convierte la muestra a una distribucion
 	 * 
-	 * @param numCuantiles
-	 * @return
+	 * @param numCuantiles	Cuantos cuantiles se quieren vern en la 
+	 * 						distribucion generada
+	 * @return				La distrbucion generada con la muestra
 	 */
 	public Distribucion comoDistribucion(int numCuantiles){
 		//TODO: Validar que numCuantiles sea inpar
@@ -53,16 +59,14 @@ public class Muestra {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return La media de la muestra
 	 */
 	public double getMedia(){
 		return Stats.media(todasObservaciones);
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return La desviacion de la muestra
 	 */
 	public double getDesviacionStd(){
 		return Stats.desviacionStd(todasObservaciones);

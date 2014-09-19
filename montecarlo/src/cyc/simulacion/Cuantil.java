@@ -8,8 +8,16 @@ import java.util.List;
 
 
 /**
+ * Representa un cuantil en los calculos de las simulaciones
+ * 
+ * Esta clase no hace mucho, solo mantener una relacion
+ * del identificador de cuantil (i), el valor de x (x), el
+ * resultado de la funcion evaluada en x (f(x)), la probabilidad
+ * de x (px) y la probabilidad acumulada para el cuantil (pdf)
+ * 
+ * Tambien se guarda las observaciones que se han visto en el cuantil
+ * 
  * @author Alfonso Kim
- *
  */
 public class Cuantil implements Comparable<Cuantil>, Cloneable {
 	
@@ -22,14 +30,14 @@ public class Cuantil implements Comparable<Cuantil>, Cloneable {
 	private List<Double> observaciones;
 
 	/**
-	 * 
+	 * Constructor simple
 	 */
 	public Cuantil() { 
 		observaciones = new ArrayList<Double>();
 	}
 	
 	/**
-	 * 
+	 * Clonar para generar la muestra
 	 */
 	@Override
 	public Cuantil clone(){
@@ -51,8 +59,7 @@ public class Cuantil implements Comparable<Cuantil>, Cloneable {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return el numero de observaciones en el cuantil
 	 */
 	public int getNumObservaciones(){
 		return observaciones.size();
@@ -130,15 +137,14 @@ public class Cuantil implements Comparable<Cuantil>, Cloneable {
 	
 	/**
 	 * 
-	 * @return
+	 * @return el numero de observaciones acumuladas
 	 */
 	public long getObservacionesAcumuladas(){
 		return observacionesAcumuladas;
 	}
 	
 	/**
-	 * 
-	 * @param observaciones
+	 * @param observaciones agrega observaciones acumuladas al cuantil
 	 */
 	public void addObservacionesAcumuladas(long observaciones){
 		//TODO: Tal vez validar que observaciones > 0
@@ -156,14 +162,6 @@ public class Cuantil implements Comparable<Cuantil>, Cloneable {
 				.append(", pdf=").append(pdf)
 				.append("]");
 		return builder.toString();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String elementoToString(){
-		return toString();
 	}
 
 

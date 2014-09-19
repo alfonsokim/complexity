@@ -7,20 +7,21 @@ import java.util.List;
 
 
 /**
+ * Utilerias para las estadisticas basicas
+ * 
  * @author Alfonso Kim
- *
  */
 public class Stats {
 
 	/**
-	 * 
+	 * Como solo tiene metodos estaticos no se necesitan instancias
 	 */
 	private Stats() { }
 	
 	/**
-	 * 
-	 * @param numeros
-	 * @return
+	 * Suma una lista de numeros
+	 * @param numeros	La lista a sumar
+	 * @return			La suma
 	 */
 	public static double suma(List<Double> numeros){
 		double acumulado = 0;
@@ -31,9 +32,10 @@ public class Stats {
 	}
 	
 	/**
+	 * Calcula la media de una lista de numeros
 	 * 
-	 * @param numeros
-	 * @return
+	 * @param numeros Los numeros a calcular la media
+	 * @return		  La media
 	 */
 	public static double media(List<Double> numeros){
 		
@@ -45,9 +47,10 @@ public class Stats {
 	}
 	
 	/**
+	 * Calcula la desviacion estandar de una lista de numeos
 	 * 
-	 * @param numeros
-	 * @return
+	 * @param numeros	La lista a calcular la desviacion
+	 * @return			La desviacion estandar
 	 */
 	public static double desviacionStd(List<Double> numeros){
 		
