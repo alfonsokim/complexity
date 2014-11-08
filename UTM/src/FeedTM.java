@@ -13,6 +13,7 @@ class FeedTM{
 	  String sResp;
 	  int i;
 	  boolean ask=false;
+	  System.out.println(new File(".").getAbsolutePath());
    	  while (true){
    	  	if (ask){					// No preguntes la primera vez
 		    System.out.println("\nDesea leer otro archivo?");
