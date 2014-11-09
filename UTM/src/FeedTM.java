@@ -266,7 +266,7 @@ class FeedTM{
 			}//endIf
 			break;				// Exit While
 		}//endWhile
-		String NuevaCinta=sol.UTM.NewTape(TT,Cinta,N,P);
+		String NuevaCinta = UTM.NewTape(TT,Cinta,N,P);
 	    PrintStream PProc=new PrintStream(new FileOutputStream(new File("Procesada.doc")));
 	    PProc.println(NuevaCinta);
 		System.out.println("\nNueva cinta esta en \"Procesada.doc\"");

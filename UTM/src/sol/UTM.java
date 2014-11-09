@@ -18,7 +18,7 @@ public class UTM
 		for (int transition = 1; transition <= N; transition++) {
 			int currentSymbol = Integer.parseInt(Tape.substring(P, P + 1));
 			int moveIdx = nextState * 16 + currentSymbol * 8;
-			String moveStr = TT.substring(moveIdx, moveIdx + 1);
+			String outputSymbol = TT.substring(moveIdx, moveIdx + 1);
 			int move = Integer.parseInt(TT.substring(moveIdx + 1, moveIdx + 2));
 			
 			// Validacion de limites de la cinta
@@ -28,7 +28,7 @@ public class UTM
 					System.out.println("\nRight limit of tape exceeded");
 					return "";
 				}
-				leftSide = leftSide + moveStr;
+				leftSide = leftSide + outputSymbol;
 				leftSideLength++;
 				Tape = leftSide + rigthSide;
 				rigthSideLength--;
@@ -39,7 +39,7 @@ public class UTM
 					System.out.println("\nLeft limit of tape exceeded");
 					return "";
 				}
-				rigthSide = moveStr + rigthSide;
+				rigthSide = outputSymbol + rigthSide;
 				rigthSideLength++;
 				Tape = leftSide + rigthSide;
 				leftSideLength--;
