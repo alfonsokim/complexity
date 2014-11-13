@@ -183,7 +183,7 @@ public class UTM {
 		 * 		- Caracter uno es el movimiento de la cabeza
 		 * 		- Los ultimos 6 caracteres es el numero binario del siguiente estado
 		 * 
-		 * @param def 
+		 * @param def La definicion de la transicion
 		 */
 		Transition(String def){
 			outSymbol = def.charAt(0);
