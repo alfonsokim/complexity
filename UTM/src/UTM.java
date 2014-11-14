@@ -121,6 +121,18 @@ public class UTM {
 			states.add(new State(machine.substring(idx, idx + 16)));
 		}
 		
+		// Validacion de la maquina
+		boolean haltState = false;
+		for(State state: states){
+			state.validateStates(states.size());
+			if(! haltState && state.hasHaltState()){
+				haltState = true;
+			}
+		}
+		if(! haltState){
+			throw new RuntimeException("Halt state not defined");
+		}
+		
 		return states;
 	}
 	
@@ -159,6 +171,28 @@ public class UTM {
 			return transitions[value];
 		}
 		
+		/**
+		 * Valida que el siguiente estado sea un estado valido en la maquina
+		 * @param numStates El numero de estados definidos en la maquina
+		 */
+		void validateStates(int numStates){
+			for(Transition t: transitions){
+				t.validateNextState(numStates);
+			}
+		}
+		
+		/**
+		 * @return Indicador si la transicion lleva al estado de halt
+		 */
+		boolean hasHaltState(){
+			for(Transition t: transitions){
+				if(t.hasHaltState()){
+					return true;
+				}
+			}
+			return false;
+		}
+		
 	}
 	
 	// **************************************************************************
@@ -189,6 +223,24 @@ public class UTM {
 			outSymbol = def.charAt(0);
 			nextMove = Integer.parseInt(String.valueOf(def.charAt(1)));
 			nextState = Integer.parseInt(def.substring(2), 2);
+		}
+		
+		/**
+		 * Valida que el siguiente estado sea un estado valido en la maquina
+		 * @param numStates El numero de estados definidos en la maquina
+		 */
+		void validateNextState(int numStates){
+			if(!hasHaltState() && nextState >= numStates){
+				throw new RuntimeException("Invalid next state: " + nextState + 
+						". Current machine has " + numStates + " defined");
+			}
+		}
+		
+		/**
+		 * @return Indicador si la transicion lleva al estado de halt
+		 */
+		boolean hasHaltState(){
+			return nextState == HALT;
 		}
 		
 	}
