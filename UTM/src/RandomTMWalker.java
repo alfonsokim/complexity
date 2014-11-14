@@ -9,7 +9,7 @@ import java.util.Random;
  * @author Alfonso Kim
  *
  */
-public class VeryRandomClimber {
+public class RandomTMWalker {
 	
 	private int numStates;
 	private char[] tape;
@@ -18,7 +18,7 @@ public class VeryRandomClimber {
 	/**
 	 * 
 	 */
-	public VeryRandomClimber(int numStates, char[] tape) {
+	public RandomTMWalker(int numStates, char[] tape) {
 		this.numStates = numStates;
 		this.tape = tape;
 		this.random = new Random();
@@ -93,7 +93,7 @@ public class VeryRandomClimber {
 		System.out.println("Leidos " + tape.length() + " caracteres de cinta");
 		
 		int headPos = new Long(tape.length() / 2).intValue();
-		new VeryRandomClimber(5, tape.toCharArray()).climb(headPos, 1);
+		new RandomTMWalker(5, tape.toCharArray()).climb(headPos, 1);
 		
 	}
 

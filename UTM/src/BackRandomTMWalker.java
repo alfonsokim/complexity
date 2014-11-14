@@ -11,7 +11,7 @@ import java.util.Random;
  * @author Alfonso Kim
  *
  */
-public class RandomClimber {
+public class BackRandomTMWalker {
 	
 	private char[] controlUnit;
 	private char[] tape;
@@ -20,7 +20,7 @@ public class RandomClimber {
 	/**
 	 * 
 	 */
-	public RandomClimber(char[] controlUnit, char[] tape) {
+	public BackRandomTMWalker(char[] controlUnit, char[] tape) {
 		this.controlUnit = controlUnit;
 		this.tape = tape;
 		this.random = new Random();
@@ -110,7 +110,7 @@ public class RandomClimber {
 		System.out.println("Leidos " + controlUnit.length + " caracteres de unidad de control");
 		
 		int headPos = new Long(tape.length / 2).intValue();
-		new RandomClimber(controlUnit, tape).climb(headPos, 10);
+		new BackRandomTMWalker(controlUnit, tape).climb(headPos, 10);
 		
 	}
 
