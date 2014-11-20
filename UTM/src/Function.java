@@ -8,6 +8,6 @@
  */
 public interface Function {
 
-	public double evaluate(double x);
+	public double evaluate(double... x);
 	
 }
