@@ -1,16 +1,11 @@
-/**
- * 
- */
 
 /**
+ * Funcion de Schwefel a optimizar
+ * 
  * @author Alfonso Kim
- *
  */
 public class SchwefelFunction implements Function {
 
-	/**
-	 * 
-	 */
 	public SchwefelFunction() {}
 
 	/**

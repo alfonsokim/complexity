@@ -1,10 +1,10 @@
 import java.util.Arrays;
 import java.util.Random;
 
-
 /**
+ * Implementa una coleccion de genes para la optimizacion de una funcion
+ * 
  * @author Alfonso Kim
- *
  */
 public class Genes {
 	
@@ -15,6 +15,11 @@ public class Genes {
 	private int numDecimalPositions;
 	private char[][] genes;
 	
+	/**
+	 * @param numGenes				Numero de genes a generar
+	 * @param numIntegerPositions	Numero de posiciones para la parte entera
+	 * @param numDecimalPositions	Numero de posiciones para la parte decimal
+	 */
 	public Genes(int numGenes, int numIntegerPositions, int numDecimalPositions) {
 		this.numGenes = numGenes;
 		this.numIntegerPositions = numIntegerPositions;
@@ -22,6 +27,9 @@ public class Genes {
 		this.genes = getRandomGenes();
 	}
 	
+	/**
+	 * @return Una coleccionde genes aleatorios
+	 */
 	private char[][] getRandomGenes(){
 		int length = numIntegerPositions + numDecimalPositions + 1;
 		char[][] genes = new char[numGenes][length];
@@ -31,6 +39,9 @@ public class Genes {
 		return genes;
 	}
 	
+	/**
+	 * @return Un gen aleatorio
+	 */
 	private char[] getRandomGene(){
 		int length = numIntegerPositions + numDecimalPositions + 1;
 		char[] gene = new char[length];
@@ -40,6 +51,11 @@ public class Genes {
 		return gene;
 	}
 	
+	/**
+	 * Para conocer la estructura de un gen
+	 * @return Su representacion en string
+	 */
+	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder();
 		builder.append("Integer Positions: ").append(numIntegerPositions).append("\n");
@@ -55,6 +71,9 @@ public class Genes {
 		return builder.toString();
 	}
 	
+	/**
+	 * Clona los genes para mantener una referencia antes de la mutacion
+	 */
 	public Genes clone(){
 		char[][] copy = new char[genes.length][genes[0].length];
 		for(int i = 0; i < genes.length; i++){
@@ -68,6 +87,10 @@ public class Genes {
 		return clon;
 	}
 	
+	/**
+	 * Muta los genes actuales, modificando un bit de alguno de los
+	 * genes seleccionados al azar
+	 */
 	public void mutate(){
 		char[] gene = genes[random.nextInt(genes.length)]; 	// Seleccionar gen aleatorio
 		int chromosomeIdx = random.nextInt(gene.length);	// Seleccionar cromosoma aleatorio
@@ -75,6 +98,9 @@ public class Genes {
 		gene[chromosomeIdx] = chromosome == '0' ? '1' : '0';	// Invertir
 	}
 	
+	/**
+	 * @return El valor numerico de los genes
+	 */
 	public double[] asDoubles(){
 		double[] values = new double[genes.length];
 		for(int i = 0; i < genes.length; i++){
@@ -83,6 +109,10 @@ public class Genes {
 		return values;
 	}
 	
+	/**
+	 * @param gene El gen a obtener su valor numerico
+	 * @return		El valor numerico del gen
+	 */
 	private double genAsDouble(char[] gene){
 		if(null == gene || gene.length == 0){
 			throw new RuntimeException("Gene must not be empty");

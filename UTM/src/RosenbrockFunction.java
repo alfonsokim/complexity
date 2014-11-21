@@ -1,16 +1,11 @@
-/**
- * 
- */
 
 /**
+ * Funcion de Rosenbrock a optimizar
+ * 
  * @author Alfonso Kim
- *
  */
 public class RosenbrockFunction implements Function {
 
-	/**
-	 * 
-	 */
 	public RosenbrockFunction() {}
 
 	/**

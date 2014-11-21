@@ -1,16 +1,11 @@
-/**
- * 
- */
 
 /**
+ * Funcion de DeJongs a optimizar
+ * 
  * @author Alfonso Kim
- *
  */
 public class DeJongsFunction implements Function {
 
-	/**
-	 * 
-	 */
 	public DeJongsFunction() {}
 
 	/**

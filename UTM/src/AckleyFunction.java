@@ -1,16 +1,11 @@
-/**
- * 
- */
 
 /**
- * @author Alfonso
- *
+ * Funcion de Ackley a optimizar
+ * 
+ * @author Alfonso Kim
  */
 public class AckleyFunction implements Function {
 
-	/**
-	 * 
-	 */
 	public AckleyFunction() {}
 
 	/**

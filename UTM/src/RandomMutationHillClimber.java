@@ -3,16 +3,23 @@ import java.util.List;
 
 
 /**
- * @author Alfonso Kim
- *
+ * Escalador de mutacion aleatoria
+ * 
+ * @author Alfonso Kim, Complejidad y Computabilidad
  */
 public class RandomMutationHillClimber {
 
-	/**
-	 * 
-	 */
 	public RandomMutationHillClimber() { }
 	
+	/**
+	 * Evalua un conjunto de genes contra una funcion de ajuste durante un 
+	 * numero de iteraciones
+	 * 	
+	 * @param function		La funcion de ajuste
+	 * @param genes			Los genes iniciales
+	 * @param numIterations	Las iteraciones a evaluar
+	 * @return				El resultado de una escalada aleatoria
+	 */
 	public ClimbResult climb(Function function, Genes genes, int numIterations){
 		double min = Double.MAX_VALUE;
 		ClimbResult result = new ClimbResult();
@@ -32,7 +39,9 @@ public class RandomMutationHillClimber {
 		return result;
 	}
 	
-	
+	/**
+	 * @param args Punto de entrada de la consola
+	 */
 	public static void main(String[] args){
 		
 		RandomMutationHillClimber climber = new RandomMutationHillClimber();
@@ -67,8 +76,18 @@ public class RandomMutationHillClimber {
 
 }
 
+/**
+ * Minimizacion de una funcion
+ * 
+ * @author Alfonso Kim
+ */
 class Climber {
 	
+	/**
+	 * @param function		La funcion de ajuste
+	 * @param genes			Los genes iniciales
+	 * @param numIterations	Las iteraciones a evaluar
+	 */
 	public Climber(Function function, Genes genes, int numIterations){
 		this.function = function;
 		this.genes = genes;
@@ -81,10 +100,21 @@ class Climber {
 	
 }
 
-
+/**
+ * Resultado de una escalada
+ * 
+ * @author Alfonso Kim
+ */
 class ClimbResult {
 	
+	/**
+	 * El minimo encontrado
+	 */
 	public double minimum;
+	
+	/**
+	 * La combinacion de genes que genero el minimo
+	 */
 	public Genes summit;
 	
 }
