@@ -1,5 +1,4 @@
 
-
 /**
  * @author Alfonso Kim
  *
@@ -50,7 +49,7 @@ public class RandomMutationHillClimbing {
 		
 		Function f2 = new RosenbrockFunction();
 		System.out.print("=================================== ");
-		System.out.print(f1.getName());
+		System.out.print(f2.getName());
 		System.out.println(" ===================================");
 		
 		Genes f2Genes = new Genes(2, 2, 0);
@@ -61,6 +60,36 @@ public class RandomMutationHillClimbing {
 		System.out.println(" ===================================");
 		System.out.println("minimo: " + f2Result.minimum);
 		System.out.println(f2Result.summit.toString());
+		
+		
+		Function f3 = new SchwefelFunction();
+		System.out.print("=================================== ");
+		System.out.print(f3.getName());
+		System.out.println(" ===================================");
+		
+		Genes f3Genes = new Genes(3, 8, 0);
+		System.out.println(f3Genes.toString());
+		
+		ClimbResult f3Result = climber.climb(f3, f3Genes, 1000);
+		
+		System.out.println(" ===================================");
+		System.out.println("minimo: " + f3Result.minimum);
+		System.out.println(f3Result.summit.toString());
+		
+		
+		Function f4 = new AckleyFunction();
+		System.out.print("=================================== ");
+		System.out.print(f4.getName());
+		System.out.println(" ===================================");
+		
+		Genes f4Genes = new Genes(3, 5, 7);
+		System.out.println(f4Genes.toString());
+		
+		ClimbResult f4Result = climber.climb(f4, f4Genes, 1000);
+		
+		System.out.println(" ===================================");
+		System.out.println("minimo: " + f4Result.minimum);
+		System.out.println(f4Result.summit.toString());
 		
 	}
 	
