@@ -25,4 +25,12 @@ public class DeJongsFunction implements Function {
 		return sum;
 	}
 
+	/**
+	 * @see Function#getName()
+	 */
+	@Override
+	public String getName() {
+		return "De Jong's";
+	}
+
 }

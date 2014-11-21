@@ -12,12 +12,12 @@ public class RandomMutationHillClimbing {
 	public RandomMutationHillClimbing() { }
 	
 	
-	public double climb(Function function, char[][] genes, int numIterations){
+	public ClimbResult climb(Function function, char[][] genes, int numIterations){
 		double min = Double.MAX_VALUE;
 		for(int iteration = 1; iteration <= numIterations; iteration++){
-			char[][] copy = Gene.copyGenes(genes);
-			Gene.mutate(genes);
-			double[] values = Gene.asDoubles(3, genes);
+			char[][] copy = Genes.copyGenes(genes);
+			Genes.mutate(genes);
+			double[] values = Genes.asDoubles(3, genes);
 			double eval = function.evaluate(values);
 			if(eval < min){
 				min = eval;
@@ -25,30 +25,53 @@ public class RandomMutationHillClimbing {
 				genes = copy;
 			}
 		}
-		return min;
+		ClimbResult result = new ClimbResult();
+		result.minimum = min;
+		//result.summit = genes;
+		return result;
+	}
+	
+	public ClimbResult climb2(Function function, Genes genes, int numIterations){
+		double min = Double.MAX_VALUE;
+		ClimbResult result = new ClimbResult();
+		for(int iteration = 1; iteration <= numIterations; iteration++){
+			Genes clon = genes.clone();
+			genes.mutate();
+			double[] values = genes.asDoubles();
+			double eval = function.evaluate(values);
+			if(eval < min){
+				min = eval;
+			} else {
+				genes = clon;
+			}
+		}
+		result.minimum = min;
+		result.summit = genes;
+		return result;
 	}
 	
 	
 	public static void main(String[] args){
-		char[] gene = Gene.getRandomGene(16);
-		double value = Gene.asDouble(5, gene);
-		System.out.println("valor: " + value);
-		Gene.mutate(gene);
-		value = Gene.asDouble(5, gene);
-		System.out.println("valor mutado: " + value);
 		
-		char[][] genes = Gene.getRandomGenes(4, 8);
-		for(char[] oneGene: genes){
-			value = Gene.asDouble(3, oneGene);
-			System.out.println("valor: " + value);
-		}
+		RandomMutationHillClimbing climber = new RandomMutationHillClimbing();
 		
-		double min = new RandomMutationHillClimbing().climb(new DeJongsFunction(), genes, 100);
+		Genes newGenes = new Genes(4, 3, 4);
+		System.out.println(newGenes.toString());
 		
-		System.out.println("minimo: " + min);
+		ClimbResult result = climber.climb2(new DeJongsFunction(), newGenes, 100);
+		System.out.println("minimo: " + result.minimum);
+		System.out.println(result.summit.toString());
 		
 	}
 	
-	
 
 }
+
+
+class ClimbResult {
+	
+	public double minimum;
+	public Genes summit;
+	
+}
+
