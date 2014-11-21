@@ -11,27 +11,7 @@ public class RandomMutationHillClimbing {
 	 */
 	public RandomMutationHillClimbing() { }
 	
-	
-	public ClimbResult climb(Function function, char[][] genes, int numIterations){
-		double min = Double.MAX_VALUE;
-		for(int iteration = 1; iteration <= numIterations; iteration++){
-			char[][] copy = Genes.copyGenes(genes);
-			Genes.mutate(genes);
-			double[] values = Genes.asDoubles(3, genes);
-			double eval = function.evaluate(values);
-			if(eval < min){
-				min = eval;
-			} else { // Si la mutacion no funciona regresar a la anterior
-				genes = copy;
-			}
-		}
-		ClimbResult result = new ClimbResult();
-		result.minimum = min;
-		//result.summit = genes;
-		return result;
-	}
-	
-	public ClimbResult climb2(Function function, Genes genes, int numIterations){
+	public ClimbResult climb(Function function, Genes genes, int numIterations){
 		double min = Double.MAX_VALUE;
 		ClimbResult result = new ClimbResult();
 		for(int iteration = 1; iteration <= numIterations; iteration++){
@@ -54,13 +34,33 @@ public class RandomMutationHillClimbing {
 	public static void main(String[] args){
 		
 		RandomMutationHillClimbing climber = new RandomMutationHillClimbing();
+		Function f1 = new DeJongsFunction();
+		System.out.print("=================================== ");
+		System.out.print(f1.getName());
+		System.out.println(" ===================================");
 		
 		Genes newGenes = new Genes(4, 3, 4);
 		System.out.println(newGenes.toString());
 		
-		ClimbResult result = climber.climb2(new DeJongsFunction(), newGenes, 100);
+		ClimbResult result = climber.climb(f1, newGenes, 100);
+		
+		System.out.println(" ===================================");
 		System.out.println("minimo: " + result.minimum);
 		System.out.println(result.summit.toString());
+		
+		Function f2 = new RosenbrockFunction();
+		System.out.print("=================================== ");
+		System.out.print(f1.getName());
+		System.out.println(" ===================================");
+		
+		Genes f2Genes = new Genes(2, 2, 0);
+		System.out.println(f2Genes.toString());
+		
+		ClimbResult f2Result = climber.climb(f2, f2Genes, 500);
+		
+		System.out.println(" ===================================");
+		System.out.println("minimo: " + f2Result.minimum);
+		System.out.println(f2Result.summit.toString());
 		
 	}
 	
