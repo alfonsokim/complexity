@@ -25,7 +25,9 @@ public class TapeComparator {
 	}
 	
 	public double getLikeness(String other){
+		//System.out.println("Comparando: " + original);
 		List<Integer> otherSequences = ByteUtils.binarySequence(other);
+		//System.out.println("Contra: " + other);
 		double likeness = 0;
 		for(int degree = 0; degree <= freedom; degree++){
 			List<Integer> lcs = LongestCommonSubsequence.forIntegers(sequences, otherSequences, degree);

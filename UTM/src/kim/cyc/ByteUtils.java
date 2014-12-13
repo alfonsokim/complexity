@@ -6,6 +6,7 @@ package kim.cyc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Alfonso Kim
@@ -59,6 +60,23 @@ public class ByteUtils {
 
 	public static String toBinaryString(byte bait){
 		return String.format("%8s", Integer.toBinaryString(bait & 0xFF)).replace(' ', '0');
+	}
+	
+	public static String getZeroString(int strSize){
+		StringBuilder builder = new StringBuilder();
+		for(int i = 0; i < strSize; i++){
+			builder.append("0");
+		}
+		return builder.toString();
+	}
+	
+	public static String getRandomString(int strSize){
+		Random random = new Random();
+		StringBuilder builder = new StringBuilder();
+		for(int i = 0; i < strSize; i++){
+			builder.append(random.nextBoolean() ? '1' : '0');
+		}
+		return builder.toString();
 	}
 
 	public static void main(String[] args){
