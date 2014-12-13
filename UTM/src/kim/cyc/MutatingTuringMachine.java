@@ -17,9 +17,9 @@ public class MutatingTuringMachine {
 	private final static int HALT = 63;
 	private final static int STATE_LENGTH = 16;
 	private final static int NUM_STATES = 64;
+	private String freeze;
+	private char[] machine;
 	private int haltStateIndex;
-	private int mutatedState; 
-	private int mutatedBit;
 	private long productivity;
 	private List<State> states;
 	private Random random;
@@ -30,20 +30,17 @@ public class MutatingTuringMachine {
 	 */
 	public MutatingTuringMachine(boolean forceHaltState) { 
 		random = new Random();
-		states = new ArrayList<State>();
-		mutatedState = -1;
-		mutatedBit = -1;
 		if(forceHaltState){
 			haltStateIndex = random.nextInt(NUM_STATES+1);
 		} else {
 			haltStateIndex = -1;
 		}
-		for(int state = 0; state < NUM_STATES; state++){
-			StringBuilder stateBuilder = new StringBuilder();
-			stateBuilder.append(getRandomState(state == haltStateIndex));
-			states.add(new State(stateBuilder.toString()));
+		StringBuilder machineBuilder = new StringBuilder();
+		for(int stateIdx = 0; stateIdx < NUM_STATES; stateIdx++){
+			machineBuilder.append(getRandomState(stateIdx == haltStateIndex));
 		}
-
+		freeze = machineBuilder.toString();
+		states = parseMachine(machineBuilder.toString());
 	}
 
 	private String getRandomState(boolean haltState){
@@ -59,18 +56,62 @@ public class MutatingTuringMachine {
 	}
 
 	public void mutate(){
-		mutatedState = haltStateIndex;
+		int mutatedState = haltStateIndex;
 		while(mutatedState == haltStateIndex){
 			mutatedState = random.nextInt(NUM_STATES);
 		}
-		mutatedBit = random.nextInt(STATE_LENGTH);
-		states.get(mutatedState).mutate(mutatedBit);
+		int mutatedBit = random.nextInt(STATE_LENGTH);
+		machine = freeze.toCharArray();
+		char newChar = states.get(mutatedState).mutate(mutatedBit);
+		machine[(mutatedState * 16) + mutatedBit] = newChar;
+	}
+	
+	public void commit(){
+		freeze = new String(machine);
 	}
 	
 	public void restore(){
-		if(mutatedState >= 0 && mutatedBit >= 0) {
-			states.get(mutatedState).mutate(mutatedBit);
+		states = parseMachine(freeze);
+	}
+	
+	/**
+	 * Parsea la unidad de control de la UTM en formato binario
+	 * a una lista de estados.
+	 * 
+	 * La unidad de control debe cumplir ciertas reglas:
+	 * 		- La longitud de la cadena debe ser multiplo de 16
+	 * 		- Cada 16 caracteres es un estado de la unidad de control
+	 * 		- Los primeros 8 caracteres son cuando se lee un simbolo '0'
+	 * 		- Los ultimos  8 caracteres son cuando se lee un simbolo '1'
+	 * 
+	 * @param machine	Definicion de la unidad de control
+	 * @return			Lista de estados de la UTM, el identificador de
+	 * 					cada estado es el de la posicion de la lista, de tal
+	 * 					forma que el estado 5 esta en la posicion 5 (basado en cero)
+	 */
+	private List<State> parseMachine(String machine){
+		if(machine.length() % 16 != 0){
+			throw new RuntimeException("Invalid state string [" + machine + "]");
 		}
+		List<State> states = new ArrayList<State>();
+		
+		for(int idx = 0; idx < machine.length(); idx += 16){
+			states.add(new State(machine.substring(idx, idx + 16)));
+		}
+		
+		// Validacion de la maquina
+		boolean haltState = false;
+		for(State state: states){
+			state.validateStates(states.size());
+			if(! haltState && state.hasHaltState()){
+				haltState = true;
+			}
+		}
+		if(! haltState){
+			throw new RuntimeException("Halt state not defined");
+		}
+		
+		return states;
 	}
 
 
@@ -167,12 +208,14 @@ public class MutatingTuringMachine {
 			return transitions[value];
 		}
 		
-		void mutate(int idx){
+		char mutate(int idx){
 			char[] sequence = definition.toCharArray();
 			char bit = sequence[idx];
-			sequence[idx] = bit == '1' ? '0' : '1';
+			char newBit = bit == '1' ? '0' : '1';
+			sequence[idx] = newBit;
 			definition = new String(sequence);
 			setUp();
+			return newBit;
 		}
 
 		/**

@@ -33,6 +33,7 @@ public class Main {
 				if(likeness >= fitness){
 					tape = result;
 					fitness = likeness;
+					turingMachine.commit();
 				} else {
 					stillCount++;
 					turingMachine.restore();
