@@ -69,7 +69,7 @@ public class ByteUtils {
 		List<Integer> a = Arrays.asList(new Integer[]{9, 4, 0, 5, 8});
 		List<Integer> b = Arrays.asList(new Integer[]{9, 4, 3, 5, 8});
 		System.out.println("lcs4int: " + LongestCommonSubsequence.forIntegers(a, b));
-		System.out.println("lcs4intFree: " + LongestCommonSubsequence.forIntegersFreedom(a, b, 5));
+		System.out.println("lcs4intFree: " + LongestCommonSubsequence.forIntegers(a, b, 5));
 	}
 
 }

@@ -52,39 +52,11 @@ public class LongestCommonSubsequence {
 	
 	
 	public static List<Integer> forIntegers(List<Integer> a, List<Integer> b) {
-		int[][] lengths = new int[a.size()+1][b.size()+1];
-
-		// row 0 and column 0 are initialized to 0 already
-		
-		for (int i = 0; i < a.size(); i++)
-			for (int j = 0; j < b.size(); j++)
-				if (a.get(i) == b.get(j))
-					lengths[i+1][j+1] = lengths[i][j] + 1;
-				else
-					lengths[i+1][j+1] =
-					Math.max(lengths[i+1][j], lengths[i][j+1]);
-
-		// read the substring out from the matrix
-		List<Integer> sequences = new ArrayList<Integer>();
-		for (int x = a.size(), y = b.size();
-				x != 0 && y != 0; ) {
-			if (lengths[x][y] == lengths[x-1][y])
-				x--;
-			else if (lengths[x][y] == lengths[x][y-1])
-				y--;
-			else {
-				assert a.get(x-1) == b.get(y-1);
-				sequences.add(a.get(x - 1));
-				x--;
-				y--;
-			}
-		}
-		Collections.reverse(sequences);
-		return sequences;
+		return forIntegers(a, b, 0);
 	}
 
 	
-	public static List<Integer> forIntegersFreedom(List<Integer> a, List<Integer> b, int freedom) {
+	public static List<Integer> forIntegers(List<Integer> a, List<Integer> b, int freedom) {
 		int[][] lengths = new int[a.size()+1][b.size()+1];
 
 		// row 0 and column 0 are initialized to 0 already
