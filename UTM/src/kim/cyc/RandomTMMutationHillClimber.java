@@ -75,4 +75,46 @@ public class RandomTMMutationHillClimber {
 		return tape;
 	}
 
+	/**
+	 * @return the extremeMutationThreshold
+	 */
+	public int getExtremeMutationThreshold() {
+		return extremeMutationThreshold;
+	}
+
+	/**
+	 * @param extremeMutationThreshold the extremeMutationThreshold to set
+	 */
+	public void setExtremeMutationThreshold(int extremeMutationThreshold) {
+		this.extremeMutationThreshold = extremeMutationThreshold;
+	}
+
+	/**
+	 * @return the extremeMutationCount
+	 */
+	public int getExtremeMutationCount() {
+		return extremeMutationCount;
+	}
+
+	/**
+	 * @param extremeMutationCount the extremeMutationCount to set
+	 */
+	public void setExtremeMutationCount(int extremeMutationCount) {
+		this.extremeMutationCount = extremeMutationCount;
+	}
+
+	/**
+	 * @return the freedomDegree
+	 */
+	public int getFreedomDegree() {
+		return freedomDegree;
+	}
+
+	/**
+	 * @param freedomDegree the freedomDegree to set
+	 */
+	public void setFreedomDegree(int freedomDegree) {
+		this.freedomDegree = freedomDegree;
+	}
+
 }

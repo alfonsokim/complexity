@@ -17,50 +17,14 @@ public class Main {
 	public static void main(String[] args){
 		MutatingTuringMachine turingMachine = new MutatingTuringMachine(true);
 		String inTape = ByteUtils.toBinaryString("zAyBxC");
-		TapeComparator comparator = new TapeComparator(inTape, 10);
-		String startTape = ByteUtils.getRandomString(inTape.length());
-		int iterations = 0;
-		double fitness = 0;
-		double stillCount = 0;
-		int numTransitions = 100;
-		int mutationThreshold = 1000;
-		String tape = startTape;
-		while(iterations < 1000000){
-			turingMachine.mutate();
-			try {
-				String result = turingMachine.processTape(tape, numTransitions, tape.length() / 2);
-				double likeness = comparator.getLikeness(result);
-				if(likeness >= fitness){
-					tape = result;
-					fitness = likeness;
-					turingMachine.commit();
-				} else {
-					stillCount++;
-					turingMachine.restore();
-				}
-				if(stillCount >= mutationThreshold){
-					stillCount = 0;
-					mutationThreshold = mutationThreshold / 2;
-					for(int i = 0; i < 1000; i++){
-						turingMachine.mutate();
-					}
-				}
-				if(iterations % 100 == 0){
-					System.out.println("fitness = " + fitness);
-				}
-				if(turingMachine.isHalted()){
-					//System.out.println("Rebuilding TM from HALT");
-					turingMachine.mutate();
-				}
-			} catch (RuntimeException e){
-				turingMachine.mutate();
-			}
-			
-			iterations++;
-		}
-		System.out.println("original: " + inTape);
-		System.out.println("inicial: " + startTape);
-		System.out.println("final: " + tape);
+		//TapeComparator comparator = new TapeComparator(inTape, 10);
+		//String startTape = ByteUtils.getRandomString(inTape.length());
+		RandomTMMutationHillClimber hillClimber = new RandomTMMutationHillClimber(
+				turingMachine, 1000000, 1000
+		);
+		hillClimber.setFreedomDegree(10);
+		hillClimber.climb(inTape);
+
 	}
 
 }
