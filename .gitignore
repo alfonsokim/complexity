@@ -1,6 +1,7 @@
 *.class
 *.csv
 *.jar
+*.txt
 
 Procesada.doc
 

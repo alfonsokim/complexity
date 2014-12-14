@@ -3,6 +3,8 @@
  */
 package kim.cyc;
 
+import java.io.File;
+
 /**
  * @author Alfonso Kim
  *
@@ -16,14 +18,13 @@ public class Main {
 	
 	public static void main(String[] args){
 		MutatingTuringMachine turingMachine = new MutatingTuringMachine(true);
-		String inTape = ByteUtils.toBinaryString("zAyBxC");
-		//TapeComparator comparator = new TapeComparator(inTape, 10);
-		//String startTape = ByteUtils.getRandomString(inTape.length());
+		String inTape = ByteUtils.readFileAsBitString(new File("test.txt"));
 		RandomTMMutationHillClimber hillClimber = new RandomTMMutationHillClimber(
 				turingMachine, 100000, 1000
 		);
 		hillClimber.setFreedomDegree(10);
-		hillClimber.climb(inTape);
+		String outTape = hillClimber.climb(inTape);
+		ByteUtils.writeBitStringAsFile(new File("salidaTuring.txt"), outTape);
 
 	}
 
