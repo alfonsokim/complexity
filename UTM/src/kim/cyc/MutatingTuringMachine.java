@@ -115,7 +115,7 @@ public class MutatingTuringMachine {
 	}
 
 
-	public String processTape(String tapeStr, int numIterations, int headPosition) {
+	public String processTape(String tapeStr, long numIterations, int headPosition) {
 		haltStateReached = false;
 		productivity = 0;
 		char[] tape = tapeStr.toCharArray();

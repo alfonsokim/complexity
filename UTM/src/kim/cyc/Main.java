@@ -17,7 +17,7 @@ public class Main {
 	public static void main(String[] args){
 		MutatingTuringMachine turingMachine = new MutatingTuringMachine(true);
 		String inTape = ByteUtils.toBinaryString("zAyBxC");
-		TapeComparator comparator = new TapeComparator(inTape, 0);
+		TapeComparator comparator = new TapeComparator(inTape, 10);
 		String startTape = ByteUtils.getRandomString(inTape.length());
 		int iterations = 0;
 		double fitness = 0;
@@ -41,7 +41,6 @@ public class Main {
 				if(stillCount >= mutationThreshold){
 					stillCount = 0;
 					mutationThreshold = mutationThreshold / 2;
-					//System.out.println("zupermutate");
 					for(int i = 0; i < 1000; i++){
 						turingMachine.mutate();
 					}
@@ -52,11 +51,8 @@ public class Main {
 				if(turingMachine.isHalted()){
 					//System.out.println("Rebuilding TM from HALT");
 					turingMachine.mutate();
-					//turingMachine = new MutatingTuringMachine(true);
-					//tape = turingMachine.processTape(tape, numTransitions, tape.length() / 2);
 				}
 			} catch (RuntimeException e){
-				//System.out.println("Restoring TM from error: " + e.getMessage());
 				turingMachine.mutate();
 			}
 			
