@@ -211,20 +211,25 @@ public class MutatingTuringMachine {
 		MutatingTuringMachine turingMachine = new MutatingTuringMachine(true);
 		Map<Integer, Integer> relations = new LinkedHashMap<Integer, Integer>();
 		recursiveReduce(0, relations);
-		recursiveReduce(0, relations);
+		recursiveReduce(64, relations);
 		System.out.println("relaciones: " + relations);
-		for(int stateIdx : relations.keySet()){
-			
+		List<State> finalStates = new ArrayList<State>();
+		for(int stateOffset : relations.keySet()){
+			int offset = stateOffset > 64 ? 1 : 0;
+			int stateIdx = stateOffset % 64;
+			State state = states.get(stateIdx);
+			System.out.println("procesando>" + stateOffset);
 		}
 		turingMachine.setMachineDefinition("");
 		return turingMachine;
 	}
 	
-	private void recursiveReduce(int state, Map<Integer, Integer> memory){
+	private void recursiveReduce(int stateOffset, Map<Integer, Integer> memory){
+		int state = stateOffset % 64;
 		if(states.get(state).used && ! memory.containsKey(state)){
-			memory.put(state, memory.size());
+			memory.put(stateOffset, memory.size());
 			recursiveReduce(states.get(state).transitions[0].nextState, memory);
-			recursiveReduce(states.get(state).transitions[1].nextState, memory);
+			recursiveReduce(states.get(state).transitions[1].nextState + 64, memory);
 			/*
 			for(int transition = 0; transition < 2; transition++){
 				int nextState = states.get(state).transitions[transition].nextState;
