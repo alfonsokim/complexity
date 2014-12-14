@@ -4,8 +4,13 @@
 package kim.cyc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 
 /**
@@ -79,7 +84,16 @@ public class MutatingTuringMachine {
 	}
 	
 	public void restore(){
+		machine = freeze.toCharArray();
 		states = parseMachine(freeze);
+	}
+	
+	public void setMachineDefinition(String definition){
+		states = parseMachine(definition);
+	}
+	
+	public String getMachineDefinition(){
+		return new String(machine);
 	}
 	
 	/**
@@ -148,8 +162,8 @@ public class MutatingTuringMachine {
 			tape[headPosition] = write;
 			headPosition += (transition.nextMove == 0 ? 1 : -1);
 
-			if(headPosition < 0 || headPosition > tape.length){
-				throw new RuntimeException("Exceeded tape bounds: " + headPosition);
+			if(headPosition < 0 || headPosition >= tape.length){
+				return new String(tape);
 			}
 
 			State nextState = states.get(transition.nextState);
@@ -161,7 +175,6 @@ public class MutatingTuringMachine {
 		if(transition.nextState == HALT){
 			haltStateReached = true;
 		}
-
 		return new String(tape);
 	}
 	
@@ -193,6 +206,34 @@ public class MutatingTuringMachine {
 		}
 		return builder.toString();
 	}
+	
+	public MutatingTuringMachine reduce(){
+		MutatingTuringMachine turingMachine = new MutatingTuringMachine(true);
+		Map<Integer, Integer> relations = new LinkedHashMap<Integer, Integer>();
+		recursiveReduce(0, relations);
+		recursiveReduce(0, relations);
+		System.out.println("relaciones: " + relations);
+		for(int stateIdx : relations.keySet()){
+			
+		}
+		turingMachine.setMachineDefinition("");
+		return turingMachine;
+	}
+	
+	private void recursiveReduce(int state, Map<Integer, Integer> memory){
+		if(states.get(state).used && ! memory.containsKey(state)){
+			memory.put(state, memory.size());
+			recursiveReduce(states.get(state).transitions[0].nextState, memory);
+			recursiveReduce(states.get(state).transitions[1].nextState, memory);
+			/*
+			for(int transition = 0; transition < 2; transition++){
+				int nextState = states.get(state).transitions[transition].nextState;
+				System.out.println("de " + state + " a " + nextState);
+				recursiveReduce(nextState, memory);
+			}
+			*/
+		}
+	}
 
 	private int getProductivity(char before, char after){
 		return Integer.parseInt(String.valueOf(after)) - 
@@ -210,6 +251,7 @@ public class MutatingTuringMachine {
 
 		Transition[] transitions;
 		String definition;
+		boolean used;
 
 		/**
 		 * Constructor.
@@ -238,6 +280,7 @@ public class MutatingTuringMachine {
 		 * @return		La siguiente transicion
 		 */
 		Transition process(char read){
+			used = true;
 			int value = read == '0' ? 0 : 1;
 			return transitions[value];
 		}
@@ -248,6 +291,7 @@ public class MutatingTuringMachine {
 		 * @return
 		 */
 		char mutate(int idx){
+			used = true;
 			char[] sequence = definition.toCharArray();
 			char bit = sequence[idx];
 			char newBit = bit == '1' ? '0' : '1';

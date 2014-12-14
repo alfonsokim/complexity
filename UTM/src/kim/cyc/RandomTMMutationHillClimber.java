@@ -72,6 +72,9 @@ public class RandomTMMutationHillClimber {
 		System.out.println("final: " + tape);
 		System.out.println("inicial: " + startTape);
 		
+		turingMachine.restore();
+		System.out.println("terminando proceso con [" + turingMachine.getMachineDefinition() + "]");
+		
 		return tape;
 	}
 
