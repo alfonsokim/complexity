@@ -42,7 +42,12 @@ public class MutatingTuringMachine {
 		freeze = machineBuilder.toString();
 		states = parseMachine(machineBuilder.toString());
 	}
-
+	
+	/**
+	 * 
+	 * @param haltState
+	 * @return
+	 */
 	private String getRandomState(boolean haltState){
 		StringBuilder builder = new StringBuilder();
 		int stateLength = STATE_LENGTH - (haltState ? 6 : 0);
@@ -54,7 +59,10 @@ public class MutatingTuringMachine {
 		}
 		return builder.toString();
 	}
-
+	
+	/**
+	 * 
+	 */
 	public void mutate(){
 		int mutatedState = haltStateIndex;
 		while(mutatedState == haltStateIndex){
@@ -114,7 +122,19 @@ public class MutatingTuringMachine {
 		return states;
 	}
 
-
+	/**
+	 * Calcula la cinta de salida de una UTM dados los parametros:
+	 * 
+	 * @param tapeStr 			Cinta inicial
+	 * @param numIterations 	Numero maximo de de iteraciones
+	 * @param headPosition		Posicion inicial de la cinta
+	 * @return		La cinta calculada despues de ejecutar la unidad de
+	 * 				control <code>TT</code> sobre la cinta <code>Tape</code>
+	 * 				empezando en la posicion <code>P</code> hasta
+	 * 				<code>N</code> iteraciones. 
+	 * 				Si se alcanzan las N iteraciones se devuelve una 
+	 * 				cinta vacia
+	 */
 	public String processTape(String tapeStr, long numIterations, int headPosition) {
 		haltStateReached = false;
 		productivity = 0;
@@ -145,14 +165,25 @@ public class MutatingTuringMachine {
 		return new String(tape);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isHalted(){
 		return haltStateReached;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public long getProductivity(){
 		return productivity;
 	}
 	
+	/** 
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 		StringBuilder builder = new StringBuilder();
 		int stateIdx = 0;
@@ -190,6 +221,9 @@ public class MutatingTuringMachine {
 			setUp();
 		}
 		
+		/**
+		 * 
+		 */
 		void setUp(){
 			transitions = new Transition[] {
 					new Transition(definition.substring(0, 8)),
@@ -208,6 +242,11 @@ public class MutatingTuringMachine {
 			return transitions[value];
 		}
 		
+		/**
+		 * 
+		 * @param idx
+		 * @return
+		 */
 		char mutate(int idx){
 			char[] sequence = definition.toCharArray();
 			char bit = sequence[idx];

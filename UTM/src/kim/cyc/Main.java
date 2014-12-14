@@ -20,7 +20,7 @@ public class Main {
 		//TapeComparator comparator = new TapeComparator(inTape, 10);
 		//String startTape = ByteUtils.getRandomString(inTape.length());
 		RandomTMMutationHillClimber hillClimber = new RandomTMMutationHillClimber(
-				turingMachine, 1000000, 1000
+				turingMachine, 100000, 1000
 		);
 		hillClimber.setFreedomDegree(10);
 		hillClimber.climb(inTape);
