@@ -24,10 +24,15 @@ public class TapeComparator {
 		this.sequences = ByteUtils.binarySequence(this.original);
 	}
 	
+	/**
+	 * Encuentra la similitud entre la cadena con la que se construyo el comparador
+	 * y una cadena dada
+	 * 
+	 * @param other La cadena aproximada a comparar
+	 * @return		Un grado de similitud entre las 2 cadenas
+	 */
 	public double getLikeness(String other){
-		//System.out.println("Comparando: " + original);
 		List<Integer> otherSequences = ByteUtils.binarySequence(other);
-		//System.out.println("Contra: " + other);
 		double likeness = 0;
 		for(int degree = 0; degree <= freedom; degree++){
 			List<Integer> lcs = LongestCommonSubsequence.forIntegers(sequences, otherSequences, degree);

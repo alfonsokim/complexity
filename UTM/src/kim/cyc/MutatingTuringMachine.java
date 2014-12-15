@@ -174,6 +174,7 @@ public class MutatingTuringMachine {
 
 		if(transition.nextState == HALT){
 			haltStateReached = true;
+			return new String(tape);
 		}
 		return new String(tape);
 	}
@@ -224,6 +225,17 @@ public class MutatingTuringMachine {
 		return turingMachine;
 	}
 	
+	/**
+	 * Metodo recursivo que agrega al mapa de memoria los estados utiles y
+	 * sus transiciones relacionadas
+	 * 
+	 * @param stateOffset	Identificador del estado procesado. Si es mayor o
+	 * 						igual a 64 entonces es el estado de la transicion 1
+	 * @param memory		La memoria de estados procesados. La llave es el
+	 * 						identificador de estado en la maquina original y
+	 * 						el valor es el identificador del estado en la nueva
+	 * 						maquina de Turing
+	 */
 	private void recursiveReduce(int stateOffset, Map<Integer, Integer> memory){
 		int state = stateOffset % 64;
 		if(states.get(state).used && ! memory.containsKey(state)){

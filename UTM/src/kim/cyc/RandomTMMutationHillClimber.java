@@ -28,6 +28,13 @@ public class RandomTMMutationHillClimber {
 		this.freedomDegree = 5;
 	}
 	
+	/**
+	 * Escala la funcion de similitud entre dos cadenas para aproximar la maquina
+	 * de Turing que aproxima la cadena dada.
+	 * 
+	 * @param initialTape	La cinta a aproximar
+	 * @return				La cinta aproximada
+	 */
 	public String climb(String initialTape){
 		TapeComparator comparator = new TapeComparator(initialTape, freedomDegree);
 		String startTape = ByteUtils.getRandomString(initialTape.length());
@@ -56,7 +63,7 @@ public class RandomTMMutationHillClimber {
 					}
 				}
 				if(iterations % 100 == 0){
-					System.out.println("fitness = " + fitness);
+					System.out.println("it: " + iterations + ", fitness = " + fitness);
 				}
 				if(turingMachine.isHalted()){
 					//System.out.println("Rebuilding TM from HALT");
@@ -73,7 +80,7 @@ public class RandomTMMutationHillClimber {
 		System.out.println("inicial: " + startTape);
 		
 		turingMachine.restore();
-		System.out.println("terminando proceso con [" + turingMachine.getMachineDefinition() + "]");
+		//System.out.println("terminando proceso con [" + turingMachine.getMachineDefinition() + "]");
 		
 		return tape;
 	}

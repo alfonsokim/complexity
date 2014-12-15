@@ -55,7 +55,17 @@ public class LongestCommonSubsequence {
 		return forIntegers(a, b, 0);
 	}
 
-	
+	/**
+	 * Encuentra la subsecuencia maxima no n grados de libertad
+	 * 
+	 * Si la diferencia absoluta maxima es mejor a igual a los grados de libertad, 
+	 * entonces los 2 numeros se consideran iguales.
+	 * 
+	 * @param a			Entero a comparar
+	 * @param b			Entero a comparar
+	 * @param freedom	Grados de libertad
+	 * @return			La subsecuencia maxim de las 2 listas
+	 */
 	public static List<Integer> forIntegers(List<Integer> a, List<Integer> b, int freedom) {
 		int[][] lengths = new int[a.size()+1][b.size()+1];
 
@@ -90,9 +100,12 @@ public class LongestCommonSubsequence {
 		return sequences;
 	}
 	
-	
-	private static boolean checkFreedom(int a, int b, int freedom){
-		return Math.abs(a - b) <= freedom;
-	}
+    /**
+     * @return  verdadero si la diferencia absoluta entre a y b es menor o igual a 
+     *          los grados de libertad. 
+     */
+    private static boolean checkFreedom(int a, int b, int freedom){
+        return Math.abs(a - b) <= freedom;
+    }
 	
 }
