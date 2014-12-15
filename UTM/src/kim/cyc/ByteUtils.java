@@ -62,6 +62,12 @@ public class ByteUtils {
 		return builder.toString();
 	}
 
+	/**
+	 * Convierte un byte a su representacion en String
+	 * @param bait	El byte a convertir
+	 * @return		La cadena con la representacion del byte
+	 * 				Ej: 93 -> "01011101"
+	 */
 	public static String toBinaryString(byte bait){
 		return String.format("%8s", Integer.toBinaryString(bait & 0xFF)).replace(' ', '0');
 	}
