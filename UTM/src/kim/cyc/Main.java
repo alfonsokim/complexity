@@ -20,7 +20,7 @@ public class Main {
 		MutatingTuringMachine turingMachine = new MutatingTuringMachine(true);
 		String inTape = ByteUtils.readFileAsBitString(new File("test.txt"));
 		RandomTMMutationHillClimber hillClimber = new RandomTMMutationHillClimber(
-				turingMachine, 100000, 1000
+				turingMachine, 100, 10
 		);
 		hillClimber.setFreedomDegree(10);
 		String outTape = hillClimber.climb(inTape);
@@ -35,7 +35,7 @@ public class Main {
 		
 		//TODO: Validar que sean correctas
 		
-		//turingMachine.reduce();
+		turingMachine.reduce();
 
 	}
 

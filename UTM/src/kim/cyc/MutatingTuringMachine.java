@@ -4,8 +4,10 @@
 package kim.cyc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -208,22 +210,67 @@ public class MutatingTuringMachine {
 		return builder.toString();
 	}
 	
+	
 	public MutatingTuringMachine reduce(){
 		MutatingTuringMachine turingMachine = new MutatingTuringMachine(true);
-		Map<Integer, Integer> relations = new LinkedHashMap<Integer, Integer>();
-		recursiveReduce(0, relations);
-		recursiveReduce(64, relations);
-		System.out.println("relaciones: " + relations);
-		List<State> finalStates = new ArrayList<State>();
-		for(int stateOffset : relations.keySet()){
-			int offset = stateOffset > 64 ? 1 : 0;
-			int stateIdx = stateOffset % 64;
-			State state = states.get(stateIdx);
-			System.out.println("procesando>" + stateOffset);
+		Node node0 = new Node(states.get(0));
+		node0.originalState = 0;
+		node0.newState = 0;
+		Set<Node> graph = new HashSet<Node>();
+		graph.add(node0);
+		buildGraph(node0, graph, 0);
+		System.out.println("Grafo: " + graph);
+		for(Node node: graph){
+			System.out.println("Nodo " + node.originalState + " sigue a " + node.transitions[0] + " en 0 y a " + node.transitions[1] + " por 1");
 		}
 		turingMachine.setMachineDefinition("");
 		return turingMachine;
 	}
+	
+	public void buildGraph(Node node, Set<Node> graph, int newState){
+		for(int i = 0; i < node.state.transitions.length; i++){
+			Transition transition = node.state.transitions[i];
+			State next = states.get(transition.nextState);
+			if(next.used){
+				Node newNode = new Node(next);
+				newNode.originalState = transition.nextState;
+				node.transitions[i] = newNode;
+				if(! graph.contains(newNode)){
+					newNode.newState = newState + 1;
+					graph.add(newNode);
+					buildGraph(newNode, graph, (newState + 1));
+				}
+			}
+		}
+	}
+	
+	
+	/*
+	public MutatingTuringMachine reduce(){
+		Map<Node, Node> usedNodes = new HashMap<Node, Node>();
+		Node node0 = new Node(states.get(0));
+		usedNodes.put(node0, node0);
+		recursiveAddNode(node0, usedNodes, 0);
+		recursiveAddNode(node0, usedNodes, 1);
+		
+		return new MutatingTuringMachine(true);
+	}
+	
+	private void recursiveAddNode(Node node, Map<Node, Node> usedNodes, int transition){
+		if(! node.state.used){
+			return;
+		}
+		Node nextNode = new Node(states.get(node.state.transitions[transition].nextState));
+		if(usedNodes.containsKey(nextNode)){
+			node.transitions[transition] = usedNodes.get(nextNode);
+		} else {
+			node.transitions[transition] = nextNode;
+			usedNodes.put(node, node);
+		}
+		recursiveAddNode(nextNode, usedNodes, 0);
+		recursiveAddNode(nextNode, usedNodes, 1);
+	}
+	*/
 	
 	/**
 	 * Metodo recursivo que agrega al mapa de memoria los estados utiles y
@@ -339,6 +386,20 @@ public class MutatingTuringMachine {
 			}
 			return false;
 		}
+		
+		@Override
+		public int hashCode(){
+			return definition.hashCode();
+		}
+		
+		@Override
+		public boolean equals(Object other){
+			if(other instanceof State){
+				State s = (State)other;
+				return definition.equals(s.definition);
+			}
+			return false;
+		}
 
 	}
 
@@ -390,6 +451,45 @@ public class MutatingTuringMachine {
 			return nextState == HALT;
 		}
 
+	}
+	
+	// **************************************************************************
+	private static class Node {
+		
+		State state;
+		Node[] transitions;
+		int originalState;
+		int newState;
+		
+		Node(State state){
+			this.state = state;
+			transitions = new Node[2];
+			originalState = -1;
+			newState = -1;
+		}
+		
+		@Override
+		public int hashCode(){
+			return state.hashCode();
+		}
+		
+		@Override
+		public boolean equals(Object other){
+			if(other instanceof Node){
+				Node n = (Node)other;
+				return state.equals(n.state);
+			}
+			return false;
+		}
+		
+		@Override
+		public String toString(){
+			return new StringBuilder()
+			.append("originalState: ").append(originalState).append(" ")
+			.append("newState: ").append(newState).append(" ")
+			.toString();
+		}
+		
 	}
 
 }

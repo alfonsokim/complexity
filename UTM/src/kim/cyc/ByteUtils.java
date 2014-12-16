@@ -119,6 +119,7 @@ public class ByteUtils {
 			}
 		} catch (EOFException e) {
 		} catch (IOException e) {
+			System.out.println("Error al abrir archivo " + in.getAbsolutePath());
 			throw new RuntimeException(e);
 		} finally {
 			if(raf != null)
