@@ -18,17 +18,17 @@ public class Main {
 	
 	public static void main(String[] args){
 		MutatingTuringMachine turingMachine = new MutatingTuringMachine(true);
-		String inTape = ByteUtils.readFileAsBitString(new File("test.txt"));
+		String inTape = ByteUtils.readFileAsBitString(new File("Hola.txt"));
 		RandomTMMutationHillClimber hillClimber = new RandomTMMutationHillClimber(
-				turingMachine, 100, 10
+				turingMachine, 100000, 1000
 		);
-		hillClimber.setFreedomDegree(10);
+		hillClimber.setFreedomDegree(5);
 		String outTape = hillClimber.climb(inTape);
 		ByteUtils.writeBitStringAsFile(new File("salidaTuring.txt"), outTape);
 		
 		//System.out.println("Probando con: [" + turingMachine.getMachineDefinition() + "]");
 		
-		String testTape = turingMachine.processTape(inTape, 100, inTape.length() / 2);
+		//String testTape = turingMachine.processTape(inTape, 100, inTape.length() / 2);
 		
 		//System.out.println("Esperada: " + outTape);
 		//System.out.println("Obtenida: " + testTape);

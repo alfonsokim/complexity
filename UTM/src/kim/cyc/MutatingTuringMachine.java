@@ -219,11 +219,14 @@ public class MutatingTuringMachine {
 		Set<Node> graph = new HashSet<Node>();
 		graph.add(node0);
 		buildGraph(node0, graph, 0);
+		System.out.println("Numero de estados usados: " + graph.size());
+		/*
 		System.out.println("Grafo: " + graph);
 		for(Node node: graph){
 			System.out.println("Nodo " + node.originalState + " sigue a " + node.transitions[0] + " en 0 y a " + node.transitions[1] + " por 1");
 		}
-		turingMachine.setMachineDefinition("");
+		*/
+		turingMachine.setMachineDefinition("0011111100111111");
 		return turingMachine;
 	}
 	
@@ -243,34 +246,6 @@ public class MutatingTuringMachine {
 			}
 		}
 	}
-	
-	
-	/*
-	public MutatingTuringMachine reduce(){
-		Map<Node, Node> usedNodes = new HashMap<Node, Node>();
-		Node node0 = new Node(states.get(0));
-		usedNodes.put(node0, node0);
-		recursiveAddNode(node0, usedNodes, 0);
-		recursiveAddNode(node0, usedNodes, 1);
-		
-		return new MutatingTuringMachine(true);
-	}
-	
-	private void recursiveAddNode(Node node, Map<Node, Node> usedNodes, int transition){
-		if(! node.state.used){
-			return;
-		}
-		Node nextNode = new Node(states.get(node.state.transitions[transition].nextState));
-		if(usedNodes.containsKey(nextNode)){
-			node.transitions[transition] = usedNodes.get(nextNode);
-		} else {
-			node.transitions[transition] = nextNode;
-			usedNodes.put(node, node);
-		}
-		recursiveAddNode(nextNode, usedNodes, 0);
-		recursiveAddNode(nextNode, usedNodes, 1);
-	}
-	*/
 	
 	/**
 	 * Metodo recursivo que agrega al mapa de memoria los estados utiles y
